@@ -19,7 +19,7 @@ class IngredientsSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Ingredients',
+            'Bahan-bahan',
             style: GoogleFonts.poppins(
               fontSize: 15,
               fontWeight: FontWeight.w600,

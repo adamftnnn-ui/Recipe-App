@@ -51,7 +51,7 @@ class DetailRecipeView extends StatelessWidget {
                   Expanded(
                     child: Center(
                       child: Text(
-                        'Detail Recipe',
+                        'Detail Resep',
                         style: GoogleFonts.poppins(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,

@@ -79,7 +79,7 @@ class _MultiLineSectionState extends State<MultiLineSection> {
           const SizedBox(height: 12),
           if (widget.items.isEmpty)
             Text(
-              'No items added',
+              'Belum ada item',
               style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey[500]),
             )
           else

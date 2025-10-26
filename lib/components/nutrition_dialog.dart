@@ -41,7 +41,7 @@ class NutritionDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Add Nutrition',
+              'Tambah Nutrisi',
               style: GoogleFonts.poppins(
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
@@ -50,12 +50,12 @@ class NutritionDialog extends StatelessWidget {
             const SizedBox(height: 14),
             TextField(
               controller: labelC,
-              decoration: _inputDecoration('Label (e.g. Protein)'),
+              decoration: _inputDecoration('Protein'),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: valueC,
-              decoration: _inputDecoration('Value'),
+              decoration: _inputDecoration('Nilai'),
             ),
             const SizedBox(height: 16),
             Row(
@@ -63,7 +63,7 @@ class NutritionDialog extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text('Cancel', style: GoogleFonts.poppins()),
+                  child: Text('Batal', style: GoogleFonts.poppins()),
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
@@ -83,7 +83,7 @@ class NutritionDialog extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Save',
+                    'Simpan',
                     style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
                   ),
                 ),

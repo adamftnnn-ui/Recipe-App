@@ -21,7 +21,7 @@ class NutritionReadonly extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Nutrition',
+            'Nutrisi',
             style: GoogleFonts.poppins(
               fontSize: 15,
               fontWeight: FontWeight.w600,

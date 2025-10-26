@@ -66,6 +66,7 @@ class InfoBox extends StatelessWidget {
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
             onTap: onImageTap,
@@ -84,7 +85,7 @@ class InfoBox extends StatelessWidget {
                       color: const Color(0xFFF2F3F5),
                       alignment: Alignment.center,
                       child: Text(
-                        'Tap to add image',
+                        'Tap tambah image',
                         style: GoogleFonts.poppins(
                           fontSize: 13,
                           color: Colors.grey[500],
@@ -94,107 +95,175 @@ class InfoBox extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
+          // Recipe Title
+          Text(
+            'Judul Resep',
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey[700],
+            ),
+          ),
+          const SizedBox(height: 4),
           TextField(
             controller: titleController,
-            decoration: _inputDecoration('Recipe Title'),
+            decoration: _inputDecoration('Judul resep kamu...'),
             onChanged: onTitleChanged,
           ),
           const SizedBox(height: 14),
+          // Country & Halal
           Row(
             children: [
               Expanded(
                 flex: 1,
-                child: DropdownButtonFormField<String>(
-                  decoration: _inputDecoration(
-                    'Country',
-                  ).copyWith(isDense: true),
-                  items: ['Indonesia', 'Italy', 'Japan', 'India']
-                      .map(
-                        (e) => DropdownMenuItem(
-                          value: e,
-                          child: Text(
-                            e,
-                            style: GoogleFonts.poppins(fontSize: 13.5),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: onCountryChanged,
-                  value: selectedCountry,
-                  borderRadius: BorderRadius.circular(14),
-                  icon: const Icon(
-                    HugeIcons.strokeRoundedArrowDown01,
-                    size: 18,
-                    color: Colors.grey,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Negara',
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    DropdownButtonFormField<String>(
+                      decoration: _inputDecoration(
+                        'Negara',
+                      ).copyWith(isDense: true),
+                      items: ['Indonesia', 'Italy', 'Japan', 'India']
+                          .map(
+                            (e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(
+                                e,
+                                style: GoogleFonts.poppins(fontSize: 13.5),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: onCountryChanged,
+                      value: selectedCountry,
+                      borderRadius: BorderRadius.circular(14),
+                      icon: const Icon(
+                        HugeIcons.strokeRoundedArrowDown01,
+                        size: 18,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
                 flex: 1,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF9FAFB),
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: Colors.grey.shade200),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Halal',
-                        style: GoogleFonts.poppins(
-                          fontSize: 13.5,
-                          color: Colors.grey[700],
-                        ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Label',
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[700],
                       ),
-                      Switch(
-                        value: isHalal,
-                        activeColor: const Color(0xFF4CAF50),
-                        inactiveThumbColor: Colors.white,
-                        inactiveTrackColor: const Color(0xFFE0E0E0),
-                        onChanged: onHalalChanged,
+                    ),
+                    const SizedBox(height: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 6,
                       ),
-                    ],
-                  ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF9FAFB),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: Colors.grey.shade200),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Halal',
+                            style: GoogleFonts.poppins(
+                              fontSize: 13.5,
+                              color: Colors.grey[700],
+                            ),
+                          ),
+                          Switch(
+                            value: isHalal,
+                            activeColor: const Color(0xFF4CAF50),
+                            inactiveThumbColor: Colors.white,
+                            inactiveTrackColor: const Color(0xFFE0E0E0),
+                            onChanged: onHalalChanged,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
           const SizedBox(height: 14),
+          // Time & Serving
           Row(
             children: [
               Expanded(
-                child: TextField(
-                  controller: timeController,
-                  keyboardType: TextInputType.number,
-                  decoration: _inputDecoration('Time').copyWith(
-                    suffixText: 'min',
-                    suffixStyle: GoogleFonts.poppins(
-                      color: Colors.grey[600],
-                      fontSize: 13.5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Durasi',
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[700],
+                      ),
                     ),
-                  ),
-                  onChanged: onTimeChanged,
+                    const SizedBox(height: 4),
+                    TextField(
+                      controller: timeController,
+                      keyboardType: TextInputType.number,
+                      decoration: _inputDecoration('0').copyWith(
+                        suffixText: 'Menit',
+                        suffixStyle: GoogleFonts.poppins(
+                          color: Colors.grey[600],
+                          fontSize: 13.5,
+                        ),
+                      ),
+                      onChanged: onTimeChanged,
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: TextField(
-                  controller: servingController,
-                  keyboardType: TextInputType.number,
-                  decoration: _inputDecoration('Serving').copyWith(
-                    suffixText: 'portion',
-                    suffixStyle: GoogleFonts.poppins(
-                      color: Colors.grey[600],
-                      fontSize: 13.5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Porsi',
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[700],
+                      ),
                     ),
-                  ),
-                  onChanged: onServingChanged,
+                    const SizedBox(height: 4),
+                    TextField(
+                      controller: servingController,
+                      keyboardType: TextInputType.number,
+                      decoration: _inputDecoration('0').copyWith(
+                        suffixText: 'Porsi',
+                        suffixStyle: GoogleFonts.poppins(
+                          color: Colors.grey[600],
+                          fontSize: 13.5,
+                        ),
+                      ),
+                      onChanged: onServingChanged,
+                    ),
+                  ],
                 ),
               ),
             ],

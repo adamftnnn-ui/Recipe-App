@@ -75,7 +75,7 @@ class _SearchViewState extends State<SearchView> {
                   Expanded(
                     child: Center(
                       child: Text(
-                        'Search',
+                        'Pencarian',
                         style: GoogleFonts.poppins(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -107,7 +107,7 @@ class _SearchViewState extends State<SearchView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Latest',
+                          'Terbaru',
                           style: GoogleFonts.poppins(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -115,7 +115,7 @@ class _SearchViewState extends State<SearchView> {
                           ),
                         ),
                         Text(
-                          'See All',
+                          'Lihat Semua',
                           style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -178,7 +178,7 @@ class _SearchViewState extends State<SearchView> {
                           });
                         },
                         child: Text(
-                          'Clear History',
+                          'Hapus Riwayat',
                           style: GoogleFonts.poppins(
                             fontSize: 14.5,
                             color: const Color(0xFFFF3B30),

@@ -55,7 +55,6 @@ class _SearchBarrState extends State<SearchBarr> {
   void _handleTap() {
     if (widget.enableNavigation) {
       _focusNode.unfocus();
-      // Navigasi ke halaman SearchView, bukan ke controller
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const SearchView()),
@@ -110,7 +109,7 @@ class _SearchBarrState extends State<SearchBarr> {
                       decoration: InputDecoration(
                         hintText:
                             widget.placeholder ??
-                            'Search recipes or ingredients...',
+                            'Cari resep atau bahan...',
                         hintStyle: GoogleFonts.poppins(
                           fontSize: 13.5,
                           color: Colors.grey[400],

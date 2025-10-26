@@ -19,7 +19,7 @@ class RecipeCard extends StatelessWidget {
           MaterialPageRoute(
             builder: (_) => DetailRecipeView(
               controller: DetailRecipeController(
-                recipe: recipe, // <-- pakai named parameter
+                recipe: recipe,
               ),
             ),
           ),
