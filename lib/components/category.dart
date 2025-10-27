@@ -51,7 +51,7 @@ class CategoryWidget extends StatelessWidget {
                         height: 52,
                         width: 52,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE8F5E9),
+                          color: Colors.green[500],
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
@@ -63,7 +63,7 @@ class CategoryWidget extends StatelessWidget {
                         ),
                         child: Icon(
                           item['icon'] as IconData,
-                          color: const Color(0xFF4CAF50),
+                          color: Colors.green[50],
                           size: 24,
                         ),
                       ),
@@ -73,7 +73,7 @@ class CategoryWidget extends StatelessWidget {
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black87,
+                          color: Colors.grey[700],
                         ),
                       ),
                     ],

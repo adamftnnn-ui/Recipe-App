@@ -57,7 +57,7 @@ class _NutritionEditableState extends State<NutritionEditable> {
                   height: 28,
                   width: 28,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF4CAF50),
+                    color: Colors.green[500],
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(
@@ -86,9 +86,9 @@ class _NutritionEditableState extends State<NutritionEditable> {
                     horizontal: 10,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFCFCFD),
+                    color: Colors.grey[50],
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.grey.shade200, width: 0.8),
+                    border: Border.all(color: Colors.grey[300]!, width: 0.8),
                   ),
                   child: Row(
                     children: [

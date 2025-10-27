@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Recipe App',
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(),
-        primaryColor: const Color(0xFF4CAF50),
+        primaryColor: Colors.green[500],
         scaffoldBackgroundColor: Colors.white,
       ),
       home: const SplashScreen(),

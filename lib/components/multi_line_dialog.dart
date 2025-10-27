@@ -21,6 +21,10 @@ class MultiLineDialog extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(18),
         width: MediaQuery.of(context).size.width * 0.9,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -38,7 +42,10 @@ class MultiLineDialog extends StatelessWidget {
                 hintText: hint,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
                 ),
+                filled: true,
+                fillColor: Colors.grey[50],
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 14,
                   vertical: 14,
@@ -53,6 +60,10 @@ class MultiLineDialog extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
+                  style: TextButton.styleFrom(
+                    foregroundColor:
+                        Colors.grey[500],
+                  ),
                   child: Text('Cancel', style: GoogleFonts.poppins()),
                 ),
                 const SizedBox(width: 10),
@@ -68,7 +79,7 @@ class MultiLineDialog extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4CAF50),
+                    backgroundColor: Colors.green[500],
                     padding: const EdgeInsets.symmetric(
                       horizontal: 22,
                       vertical: 12,
@@ -79,7 +90,8 @@ class MultiLineDialog extends StatelessWidget {
                   ),
                   child: Text(
                     'Save',
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                    style: GoogleFonts.poppins(fontWeight: FontWeight.w600, color: Colors.white,
+                    ),
                   ),
                 ),
               ],

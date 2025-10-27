@@ -16,7 +16,7 @@ class DetailRecipeView extends StatelessWidget {
     final recipe = controller.recipe;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: Colors.grey[50],
       body: SafeArea(
         child: Column(
           children: [
@@ -34,7 +34,7 @@ class DetailRecipeView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(14),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.06),
+                            color: Colors.black.withOpacity(0.04),
                             blurRadius: 6,
                             offset: const Offset(0, 3),
                           ),

@@ -14,25 +14,26 @@ class NutritionDialog extends StatelessWidget {
     InputDecoration _inputDecoration(String hint) {
       return InputDecoration(
         hintText: hint,
-        hintStyle: GoogleFonts.poppins(fontSize: 13.5, color: Colors.grey[400]),
+        hintStyle: GoogleFonts.poppins(fontSize: 13.5, color: Colors.grey[500]),
         filled: true,
-        fillColor: const Color(0xFFF9FAFB),
+        fillColor: Colors.grey[50],
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 14,
           vertical: 14,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: Colors.grey.shade200, width: 1),
+          borderSide: BorderSide(color: Colors.grey[300]!, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: Color(0xFF4CAF50), width: 1.2),
+          borderSide: BorderSide(color: Colors.green[500]!, width: 1.2),
         ),
       );
     }
 
     return Dialog(
+      backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       child: Container(
         padding: const EdgeInsets.all(18),
@@ -63,6 +64,9 @@ class NutritionDialog extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.grey[500],
+                  ),
                   child: Text('Batal', style: GoogleFonts.poppins()),
                 ),
                 const SizedBox(width: 10),
@@ -73,7 +77,7 @@ class NutritionDialog extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4CAF50),
+                    backgroundColor: Colors.green[500],
                     padding: const EdgeInsets.symmetric(
                       horizontal: 22,
                       vertical: 12,
@@ -84,7 +88,8 @@ class NutritionDialog extends StatelessWidget {
                   ),
                   child: Text(
                     'Simpan',
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                    style: GoogleFonts.poppins(fontWeight: FontWeight.w600, color: Colors.white,
+                    ),
                   ),
                 ),
               ],

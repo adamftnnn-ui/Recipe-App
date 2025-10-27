@@ -27,7 +27,7 @@ class HomeView extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: Colors.grey[50],
         body: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
@@ -40,7 +40,7 @@ class HomeView extends StatelessWidget {
             ),
             Suggestion(controller: RecipeListController()),
             Trending(recipes: recipeController.allRecipes),
-            Event(events: eventController.getAllEvents())
+            Event(events: eventController.getAllEvents()),
           ],
         ),
       ),

@@ -22,7 +22,7 @@ class ProfileOption extends StatelessWidget {
       child: Column(
         children: items.map((item) {
           return ListTile(
-            leading: Icon(item['icon'], color: Colors.grey[600]),
+            leading: Icon(item['icon'], color: Colors.grey[500]),
             title: Text(
               item['title'],
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),

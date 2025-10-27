@@ -35,17 +35,17 @@ class InfoBox extends StatelessWidget {
   InputDecoration _inputDecoration(String hint) {
     return InputDecoration(
       hintText: hint,
-      hintStyle: GoogleFonts.poppins(fontSize: 13.5, color: Colors.grey[400]),
+      hintStyle: GoogleFonts.poppins(fontSize: 13.5, color: Colors.grey[500]),
       filled: true,
-      fillColor: const Color(0xFFF9FAFB),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+      fillColor: Colors.grey[50],
+      contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 14),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: BorderSide(color: Colors.grey.shade200, width: 1),
+        borderSide: BorderSide(color: Colors.grey[300]!, width: 1),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: const BorderSide(color: Color(0xFF4CAF50), width: 1.2),
+        borderSide: BorderSide(color: Colors.green[500]!, width: 1.2),
       ),
     );
   }
@@ -82,10 +82,10 @@ class InfoBox extends StatelessWidget {
                   : Container(
                       height: 160,
                       width: double.infinity,
-                      color: const Color(0xFFF2F3F5),
+                      color: Colors.grey[50],
                       alignment: Alignment.center,
                       child: Text(
-                        'Tap tambah image',
+                        'Tap untuk tambah gambar',
                         style: GoogleFonts.poppins(
                           fontSize: 13,
                           color: Colors.grey[500],
@@ -95,7 +95,6 @@ class InfoBox extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          // Recipe Title
           Text(
             'Judul Resep',
             style: GoogleFonts.poppins(
@@ -111,7 +110,6 @@ class InfoBox extends StatelessWidget {
             onChanged: onTitleChanged,
           ),
           const SizedBox(height: 14),
-          // Country & Halal
           Row(
             children: [
               Expanded(
@@ -146,10 +144,10 @@ class InfoBox extends StatelessWidget {
                       onChanged: onCountryChanged,
                       value: selectedCountry,
                       borderRadius: BorderRadius.circular(14),
-                      icon: const Icon(
+                      icon: Icon(
                         HugeIcons.strokeRoundedArrowDown01,
                         size: 18,
-                        color: Colors.grey,
+                        color: Colors.grey[500],
                       ),
                     ),
                   ],
@@ -176,9 +174,9 @@ class InfoBox extends StatelessWidget {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF9FAFB),
+                        color: Colors.grey[50],
                         borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: Colors.grey.shade200),
+                        border: Border.all(color: Colors.grey[300]!),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -187,14 +185,14 @@ class InfoBox extends StatelessWidget {
                             'Halal',
                             style: GoogleFonts.poppins(
                               fontSize: 13.5,
-                              color: Colors.grey[700],
+                              color: Colors.grey[500],
                             ),
                           ),
                           Switch(
                             value: isHalal,
-                            activeColor: const Color(0xFF4CAF50),
+                            activeColor: Colors.green[500],
                             inactiveThumbColor: Colors.white,
-                            inactiveTrackColor: const Color(0xFFE0E0E0),
+                            inactiveTrackColor: Colors.grey[300],
                             onChanged: onHalalChanged,
                           ),
                         ],
@@ -206,7 +204,6 @@ class InfoBox extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          // Time & Serving
           Row(
             children: [
               Expanded(
@@ -228,7 +225,7 @@ class InfoBox extends StatelessWidget {
                       decoration: _inputDecoration('0').copyWith(
                         suffixText: 'Menit',
                         suffixStyle: GoogleFonts.poppins(
-                          color: Colors.grey[600],
+                          color: Colors.grey[500],
                           fontSize: 13.5,
                         ),
                       ),
@@ -257,7 +254,7 @@ class InfoBox extends StatelessWidget {
                       decoration: _inputDecoration('0').copyWith(
                         suffixText: 'Porsi',
                         suffixStyle: GoogleFonts.poppins(
-                          color: Colors.grey[600],
+                          color: Colors.grey[500],
                           fontSize: 13.5,
                         ),
                       ),

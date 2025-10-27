@@ -73,7 +73,7 @@ class _RecipeListViewState extends State<RecipeListView>
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: Colors.grey[50],
         body: Column(
           children: [
             Padding(
@@ -90,7 +90,7 @@ class _RecipeListViewState extends State<RecipeListView>
                         borderRadius: BorderRadius.circular(14),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.06),
+                            color: Colors.black.withOpacity(0.04),
                             blurRadius: 6,
                             offset: const Offset(0, 3),
                           ),
@@ -140,7 +140,7 @@ class _RecipeListViewState extends State<RecipeListView>
                             children: [
                               Icon(
                                 Icons.search_off_rounded,
-                                color: Colors.grey[400],
+                                color: Colors.grey[300],
                                 size: 60,
                               ),
                               const SizedBox(height: 14),
@@ -148,7 +148,7 @@ class _RecipeListViewState extends State<RecipeListView>
                                 'Tidak ditemukan',
                                 style: GoogleFonts.poppins(
                                   fontSize: 15,
-                                  color: Colors.grey[600],
+                                  color: Colors.grey[300],
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 0.2,
                                 ),

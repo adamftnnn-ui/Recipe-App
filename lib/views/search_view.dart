@@ -40,7 +40,7 @@ class _SearchViewState extends State<SearchView> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: Colors.grey[50],
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -58,7 +58,7 @@ class _SearchViewState extends State<SearchView> {
                         borderRadius: BorderRadius.circular(14),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.06),
+                            color: Colors.black.withOpacity(0.04),
                             blurRadius: 6,
                             offset: const Offset(0, 3),
                           ),
@@ -119,7 +119,7 @@ class _SearchViewState extends State<SearchView> {
                           style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: const Color(0xFF007AFF),
+                            color: Colors.green[500],
                           ),
                         ),
                       ],
@@ -142,7 +142,7 @@ class _SearchViewState extends State<SearchView> {
                                 children: [
                                   Icon(
                                     Icons.history_rounded,
-                                    color: Colors.grey.shade500,
+                                    color: Colors.grey[300],
                                     size: 20,
                                   ),
                                   const SizedBox(width: 10),
@@ -152,7 +152,7 @@ class _SearchViewState extends State<SearchView> {
                                       style: GoogleFonts.poppins(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w400,
-                                        color: Colors.grey.shade500,
+                                        color: Colors.grey[300],
                                         letterSpacing: 0.1,
                                       ),
                                     ),
@@ -181,7 +181,7 @@ class _SearchViewState extends State<SearchView> {
                           'Hapus Riwayat',
                           style: GoogleFonts.poppins(
                             fontSize: 14.5,
-                            color: const Color(0xFFFF3B30),
+                            color: Colors.red[500],
                             fontWeight: FontWeight.w500,
                           ),
                         ),

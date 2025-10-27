@@ -13,7 +13,7 @@ class HeaderSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFFFDFDFE),
+        color: Colors.grey[50],
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
@@ -38,7 +38,7 @@ class HeaderSection extends StatelessWidget {
                 : Container(
                     width: 100,
                     height: 100,
-                    color: const Color(0xFFF2F3F5),
+                    color: Colors.grey[500],
                     alignment: Alignment.center,
                     child: Text(
                       'No Image',
@@ -71,12 +71,12 @@ class HeaderSection extends StatelessWidget {
                         height: 20,
                         width: 20,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE8F5E9),
+                          color: Colors.green[50],
                           borderRadius: BorderRadius.circular(6),
                         ),
-                        child: const Icon(
+                        child: Icon(
                           HugeIcons.strokeRoundedHalal,
-                          color: Color(0xFF43A047),
+                          color: Colors.green[500],
                           size: 14,
                         ),
                       ),
@@ -87,7 +87,7 @@ class HeaderSection extends StatelessWidget {
                   recipe.country,
                   style: GoogleFonts.poppins(
                     fontSize: 12,
-                    color: Colors.grey[600],
+                    color: Colors.grey[500],
                   ),
                 ),
                 const SizedBox(height: 6),
@@ -112,13 +112,13 @@ class HeaderSection extends StatelessWidget {
                     Icon(
                       HugeIcons.strokeRoundedShare01,
                       size: 16,
-                      color: Colors.grey[600],
+                      color: Colors.grey[500],
                     ),
                     const SizedBox(width: 12),
                     Icon(
                       HugeIcons.strokeRoundedBookmark01,
                       size: 16,
-                      color: Colors.grey[600],
+                      color: Colors.grey[500],
                     ),
                   ],
                 ),
@@ -140,11 +140,11 @@ class _InfoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 12, color: Colors.grey[600]),
+        Icon(icon, size: 12, color: Colors.grey[500]),
         const SizedBox(width: 3),
         Text(
           text,
-          style: GoogleFonts.poppins(fontSize: 11.5, color: Colors.grey[700]),
+          style: GoogleFonts.poppins(fontSize: 11.5, color: Colors.grey[500]),
         ),
       ],
     );
@@ -164,9 +164,7 @@ class _RatingStars extends StatelessWidget {
         return Icon(
           half ? Icons.star_half_rounded : Icons.star_rounded,
           size: 12,
-          color: filled || half
-              ? const Color(0xFFFFC107)
-              : Colors.grey.shade300,
+          color: filled || half ? Colors.amber[500] : Colors.grey[300],
         );
       }),
     );

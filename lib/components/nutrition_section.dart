@@ -35,7 +35,7 @@ class NutritionReadonly extends StatelessWidget {
               1: FlexColumnWidth(1.2),
             },
             border: TableBorder.symmetric(
-              inside: BorderSide(color: Colors.grey.shade200, width: 0.4),
+              inside: BorderSide(color: Colors.grey[300]!, width: 0.4),
             ),
             children: nutrition.entries.map((e) {
               return TableRow(
@@ -64,7 +64,7 @@ class NutritionReadonly extends StatelessWidget {
                       textAlign: TextAlign.right,
                       style: GoogleFonts.poppins(
                         fontSize: 13,
-                        color: Colors.grey[600],
+                        color: Colors.grey[500],
                         fontWeight: FontWeight.w400,
                       ),
                     ),

@@ -40,7 +40,7 @@ class Event extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withOpacity(0.04),
                         blurRadius: 8,
                         offset: const Offset(0, 3),
                       ),
@@ -78,8 +78,8 @@ class Event extends StatelessWidget {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: GoogleFonts.poppins(
-                                      fontSize: 13,
-                                      color: Colors.black87.withOpacity(0.7),
+                                      fontSize: 12,
+                                      color: Colors.grey[700],
                                       height: 1.3,
                                       letterSpacing: 0.2,
                                     ),
@@ -99,7 +99,7 @@ class Event extends StatelessWidget {
                                       vertical: 6,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.5),
+                                      color: Colors.grey[500],
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Text(
@@ -139,7 +139,7 @@ class Event extends StatelessWidget {
                                     "Belum ada gambar",
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
-                                      color: Colors.grey[600],
+                                      color: Colors.grey[500],
                                       fontWeight: FontWeight.w500,
                                       letterSpacing: 0.2,
                                     ),

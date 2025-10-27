@@ -64,7 +64,7 @@ class _MultiLineSectionState extends State<MultiLineSection> {
                   height: 28,
                   width: 28,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF4CAF50),
+                    color: Colors.green[500],
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(
@@ -93,12 +93,12 @@ class _MultiLineSectionState extends State<MultiLineSection> {
                     horizontal: 10,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFCFCFD),
+                    color: Colors.grey[50],
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.grey.shade200, width: 0.8),
+                    border: Border.all(color: Colors.grey[300]!, width: 0.8),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.03),
+                        color: Colors.black.withOpacity(0.04),
                         blurRadius: 4,
                         offset: const Offset(0, 2),
                       ),
@@ -114,7 +114,7 @@ class _MultiLineSectionState extends State<MultiLineSection> {
                           alignment: Alignment.center,
                           margin: const EdgeInsets.only(right: 10),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF2F3F5),
+                            color: Colors.grey[50],
                             shape: BoxShape.circle,
                           ),
                           child: Text(
@@ -132,7 +132,7 @@ class _MultiLineSectionState extends State<MultiLineSection> {
                           height: 6,
                           margin: const EdgeInsets.only(right: 10, top: 8),
                           decoration: BoxDecoration(
-                            color: Colors.grey[400],
+                            color: Colors.grey[500],
                             shape: BoxShape.circle,
                           ),
                         ),

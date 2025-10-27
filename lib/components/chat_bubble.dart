@@ -38,12 +38,12 @@ class ChatBubble extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 12),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: isAssistant ? Colors.white : const Color(0xFFDCF8C6),
+              color: isAssistant ? Colors.white : Colors.green[50],
               borderRadius: borderRadius,
               boxShadow: [
                 if (isAssistant)
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.03),
+                    color: Colors.black.withOpacity(0.04),
                     blurRadius: 3,
                     offset: const Offset(0, 2),
                   ),
@@ -60,7 +60,7 @@ class ChatBubble extends StatelessWidget {
                       backgroundImage: avatar.isNotEmpty
                           ? AssetImage(avatar)
                           : null,
-                      backgroundColor: Colors.grey[300],
+                      backgroundColor: Colors.grey[500],
                       child: avatar.isEmpty
                           ? const Icon(
                               Icons.person,
@@ -87,14 +87,14 @@ class ChatBubble extends StatelessWidget {
                           vertical: 2,
                         ),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE3F2FD),
+                          color: Colors.blue[50],
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           role!,
                           style: GoogleFonts.poppins(
                             fontSize: 10.5,
-                            color: const Color(0xFF1E88E5),
+                            color: Colors.blue[500],
                             fontWeight: FontWeight.w500,
                           ),
                         ),

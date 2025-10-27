@@ -68,9 +68,9 @@ class CategoryModal extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.fromLTRB(14, 8, 14, 12),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 border: Border(
-                  bottom: BorderSide(color: Color(0xFFEAEAEA), width: 0.8),
+                  bottom: BorderSide(color: Colors.grey[300]!, width: 0.8),
                 ),
               ),
               child: Row(
@@ -85,16 +85,16 @@ class CategoryModal extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.06),
+                            color: Colors.black.withOpacity(0.04),
                             blurRadius: 4,
                             offset: const Offset(0, 2),
                           ),
                         ],
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.arrow_back_ios_new_rounded,
                         size: 17,
-                        color: Colors.black87,
+                        color: Colors.grey[500],
                       ),
                     ),
                   ),
@@ -122,7 +122,7 @@ class CategoryModal extends StatelessWidget {
                 ),
                 itemCount: items.length,
                 separatorBuilder: (_, __) =>
-                    const Divider(color: Color(0xFFEAEAEA), height: 10),
+                    Divider(color: Colors.grey[500], height: 10),
                 itemBuilder: (context, index) {
                   final item = items[index];
                   return InkWell(
@@ -141,7 +141,7 @@ class CategoryModal extends StatelessWidget {
                           Icon(
                             _getIcon(title, item),
                             size: 20,
-                            color: Colors.black54,
+                            color: Colors.grey[700],
                           ),
                           const SizedBox(width: 12),
                           Expanded(
@@ -150,14 +150,14 @@ class CategoryModal extends StatelessWidget {
                               style: GoogleFonts.poppins(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.black87,
+                                color: Colors.grey[700],
                               ),
                             ),
                           ),
-                          const Icon(
+                          Icon(
                             Icons.arrow_forward_ios_rounded,
                             size: 16,
-                            color: Colors.grey,
+                            color: Colors.grey[700],
                           ),
                         ],
                       ),

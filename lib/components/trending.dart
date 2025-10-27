@@ -46,7 +46,7 @@ class Trending extends StatelessWidget {
                   style: GoogleFonts.poppins(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
-                    color: const Color(0xFF4CAF50),
+                    color: Colors.green[500],
                     letterSpacing: 0.2,
                   ),
                 ),

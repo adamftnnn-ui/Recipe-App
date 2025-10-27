@@ -80,11 +80,11 @@ class _BannerWidgetState extends State<BannerWidget> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
-                color: const Color(0xFFE8F5E9),
+                color: Colors.green[50],
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withOpacity(0.04),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),
@@ -101,15 +101,15 @@ class _BannerWidgetState extends State<BannerWidget> {
                     width: _currentIndex == index ? 10 : 6,
                     decoration: BoxDecoration(
                       color: _currentIndex == index
-                          ? const Color(0xFF4CAF50)
-                          : const Color(0xFFD1D1D6),
+                          ? Colors.green[500]
+                          : Colors.grey[500],
                       borderRadius: BorderRadius.circular(3),
                     ),
                   ),
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

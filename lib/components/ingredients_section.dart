@@ -36,12 +36,12 @@ class IngredientsSection extends StatelessWidget {
                   horizontal: 10,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFCFCFD),
+                  color: Colors.grey[50],
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.grey.shade200, width: 0.8),
+                  border: Border.all(color: Colors.grey[300]!, width: 0.8),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.03),
+                      color: Colors.black.withOpacity(0.04),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),
@@ -54,7 +54,7 @@ class IngredientsSection extends StatelessWidget {
                       height: 6,
                       margin: const EdgeInsets.only(right: 10),
                       decoration: BoxDecoration(
-                        color: Colors.grey[400],
+                        color: Colors.grey[700],
                         shape: BoxShape.circle,
                       ),
                     ),

@@ -46,9 +46,7 @@ class _MainControllerState extends State<MainController> {
             height: 30,
             width: 30,
             decoration: BoxDecoration(
-              color: isActive
-                  ? const Color(0xFF4CAF50)
-                  : const Color(0xFFE5E5EA),
+              color: isActive ? Colors.green[500] : Colors.grey[300],
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(iconData, color: Colors.white, size: 20),
@@ -59,7 +57,7 @@ class _MainControllerState extends State<MainController> {
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
-              color: isActive ? const Color(0xFF4CAF50) : Colors.grey[500],
+              color: isActive ? Colors.green[500] : Colors.grey[300],
             ),
           ),
         ],
@@ -79,25 +77,25 @@ class _MainControllerState extends State<MainController> {
           children: [
             _buildNavItem(
               iconData: HugeIcons.strokeRoundedHome01,
-              label: 'Home',
+              label: 'Beranda',
               isActive: _selectedIndex == 0,
               onTap: () => _onItemTapped(0),
             ),
             _buildNavItem(
               iconData: HugeIcons.strokeRoundedAddSquare,
-              label: 'Create',
+              label: 'Buat Resep',
               isActive: _selectedIndex == 1,
               onTap: () => _onItemTapped(1),
             ),
             _buildNavItem(
               iconData: HugeIcons.strokeRoundedBubbleChat,
-              label: 'Chat',
+              label: 'Obrolan',
               isActive: _selectedIndex == 2,
               onTap: () => _onItemTapped(2),
             ),
             _buildNavItem(
               iconData: HugeIcons.strokeRoundedUser,
-              label: 'Profile',
+              label: 'Profil',
               isActive: _selectedIndex == 3,
               onTap: () => _onItemTapped(3),
             ),

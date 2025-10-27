@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../controllers/create_recipe_controller.dart';
-import '../components/multi_line_section.dart';
+import '../components/multi_line_editable.dart';
 import '../components/nutrition_editable.dart';
 import '../components/header_editable.dart';
 
@@ -30,7 +30,7 @@ class _CreateRecipeViewState extends State<CreateRecipeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: Colors.grey[50],
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

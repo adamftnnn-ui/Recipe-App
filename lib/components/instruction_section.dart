@@ -41,7 +41,7 @@ class InstructionSection extends StatelessWidget {
                       alignment: Alignment.center,
                       margin: const EdgeInsets.only(top: 2),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF2F3F5),
+                        color: Colors.grey[50],
                         shape: BoxShape.circle,
                       ),
                       child: Text(

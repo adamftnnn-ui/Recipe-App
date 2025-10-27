@@ -18,9 +18,7 @@ class RecipeCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (_) => DetailRecipeView(
-              controller: DetailRecipeController(
-                recipe: recipe,
-              ),
+              controller: DetailRecipeController(recipe: recipe),
             ),
           ),
         );
@@ -28,7 +26,7 @@ class RecipeCard extends StatelessWidget {
       child: Container(
         width: 160,
         decoration: BoxDecoration(
-          color: const Color(0xFFFDFDFE),
+          color: Colors.grey[50],
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
@@ -57,7 +55,7 @@ class RecipeCard extends StatelessWidget {
                   : Container(
                       height: 110,
                       width: double.infinity,
-                      color: const Color(0xFFF2F3F5),
+                      color: Colors.grey[50],
                       alignment: Alignment.center,
                       child: Text(
                         "Belum ada gambar",
@@ -93,12 +91,12 @@ class RecipeCard extends StatelessWidget {
                           width: 18,
                           margin: const EdgeInsets.only(left: 4),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFE8F5E9),
+                            color: Colors.green[50],
                             borderRadius: BorderRadius.circular(6),
                           ),
-                          child: const Icon(
+                          child: Icon(
                             HugeIcons.strokeRoundedHalal,
-                            color: Color(0xFF43A047),
+                            color: Colors.green[500],
                             size: 13,
                           ),
                         ),
@@ -109,7 +107,7 @@ class RecipeCard extends StatelessWidget {
                     recipe.country,
                     style: GoogleFonts.poppins(
                       fontSize: 11,
-                      color: Colors.grey[600],
+                      color: Colors.grey[500],
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -149,13 +147,13 @@ class InfoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 12, color: Colors.grey[600]),
+        Icon(icon, size: 12, color: Colors.grey[500]),
         const SizedBox(width: 3),
         Text(
           text,
           style: GoogleFonts.poppins(
             fontSize: 10.5,
-            color: Colors.grey[700],
+            color: Colors.grey[500],
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -177,9 +175,7 @@ class RatingStars extends StatelessWidget {
         return Icon(
           half ? Icons.star_half_rounded : Icons.star_rounded,
           size: 12,
-          color: filled || half
-              ? const Color(0xFFFFC107)
-              : Colors.grey.shade300,
+          color: filled || half ? Colors.amber[500] : Colors.grey[300],
         );
       }),
     );

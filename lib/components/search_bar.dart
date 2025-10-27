@@ -82,7 +82,7 @@ class _SearchBarrState extends State<SearchBarr> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.03),
+                    color: Colors.black.withOpacity(0.04),
                     blurRadius: 3,
                     offset: const Offset(0, 1),
                   ),
@@ -93,7 +93,7 @@ class _SearchBarrState extends State<SearchBarr> {
                   const SizedBox(width: 12),
                   Icon(
                     HugeIcons.strokeRoundedSearch01,
-                    color: Colors.black54,
+                    color: Colors.grey[700],
                     size: 20,
                   ),
                   const SizedBox(width: 8),
@@ -108,11 +108,10 @@ class _SearchBarrState extends State<SearchBarr> {
                       ),
                       decoration: InputDecoration(
                         hintText:
-                            widget.placeholder ??
-                            'Cari resep atau bahan...',
+                            widget.placeholder ?? 'Cari resep atau bahan...',
                         hintStyle: GoogleFonts.poppins(
                           fontSize: 13.5,
-                          color: Colors.grey[400],
+                          color: Colors.grey[500],
                         ),
                         border: InputBorder.none,
                         isDense: true,
@@ -122,10 +121,10 @@ class _SearchBarrState extends State<SearchBarr> {
                         suffixIcon: searchController.text.isEmpty
                             ? null
                             : IconButton(
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.close_rounded,
                                   size: 18,
-                                  color: Colors.grey,
+                                  color: Colors.grey[500],
                                 ),
                                 onPressed: _clearSearch,
                               ),
@@ -151,15 +150,15 @@ class _SearchBarrState extends State<SearchBarr> {
               borderRadius: BorderRadius.circular(100),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withOpacity(0.04),
                   blurRadius: 4,
                   offset: const Offset(0, 2),
                 ),
               ],
             ),
-            child: const Icon(
+            child: Icon(
               HugeIcons.strokeRoundedMic01,
-              color: Colors.black54,
+              color: Colors.grey[700],
               size: 22,
             ),
           ),

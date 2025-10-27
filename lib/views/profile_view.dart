@@ -12,7 +12,7 @@ class ProfileView extends StatelessWidget {
     final user = controller.user;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: Colors.grey[50],
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -20,7 +20,6 @@ class ProfileView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // HEADER
               Center(
                 child: Text(
                   'Profil',
@@ -33,11 +32,10 @@ class ProfileView extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // BOX PROFIL
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFDFDFE),
+                  color: Colors.grey[50],
                   borderRadius: BorderRadius.circular(18),
                   boxShadow: [
                     BoxShadow(
@@ -63,10 +61,10 @@ class ProfileView extends StatelessWidget {
                           : Container(
                               width: 80,
                               height: 80,
-                              color: const Color(0xFFF2F3F5),
+                              color: Colors.grey[50],
                               alignment: Alignment.center,
                               child: Text(
-                                'No Image',
+                                'Tidak ada gambar',
                                 style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   color: Colors.grey[500],
@@ -76,13 +74,11 @@ class ProfileView extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
 
-                    // INFO
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // NAMA + EDIT
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -101,7 +97,7 @@ class ProfileView extends StatelessWidget {
                                     user['country'] ?? '-',
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
-                                      color: Colors.grey[600],
+                                      color: Colors.grey[500],
                                     ),
                                   ),
                                 ],
@@ -111,13 +107,13 @@ class ProfileView extends StatelessWidget {
                                 height: 20,
                                 width: 20,
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFE8F5E9),
+                                  color: Colors.green[50],
                                   borderRadius: BorderRadius.circular(6),
                                 ),
-                                child: const Center(
+                                child: Center(
                                   child: Icon(
                                     HugeIcons.strokeRoundedEdit01,
-                                    color: Color(0xFF43A047),
+                                    color: Colors.green[500],
                                     size: 14,
                                   ),
                                 ),
@@ -125,8 +121,6 @@ class ProfileView extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 8),
-
-                          // GENDER + UPLOADS + SHARE
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -135,14 +129,14 @@ class ProfileView extends StatelessWidget {
                                   Icon(
                                     HugeIcons.strokeRoundedMan,
                                     size: 14,
-                                    color: Colors.grey[600],
+                                    color: Colors.grey[500],
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
                                     user['gender'] ?? '-',
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
-                                      color: Colors.grey[600],
+                                      color: Colors.grey[500],
                                     ),
                                   ),
                                 ],
@@ -153,14 +147,14 @@ class ProfileView extends StatelessWidget {
                                   Icon(
                                     HugeIcons.strokeRoundedUploadCircle01,
                                     size: 14,
-                                    color: Colors.grey[600],
+                                    color: Colors.grey[500],
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
                                     '${user['uploads'] ?? 0} Posting',
                                     style: GoogleFonts.poppins(
                                       fontSize: 12,
-                                      color: Colors.grey[600],
+                                      color: Colors.grey[500],
                                     ),
                                   ),
                                 ],
@@ -169,7 +163,7 @@ class ProfileView extends StatelessWidget {
                               Icon(
                                 HugeIcons.strokeRoundedShare01,
                                 size: 16,
-                                color: Colors.grey[600],
+                                color: Colors.grey[500],
                               ),
                             ],
                           ),
@@ -181,8 +175,6 @@ class ProfileView extends StatelessWidget {
               ),
 
               const SizedBox(height: 20),
-
-              // PERSONALSASI
               _buildSectionTitle('Personalisasi'),
               const SizedBox(height: 8),
               _buildMenuCard([
@@ -195,8 +187,6 @@ class ProfileView extends StatelessWidget {
               ]),
 
               const SizedBox(height: 20),
-
-              // PENGATURAN
               _buildSectionTitle('Pengaturan'),
               const SizedBox(height: 8),
               _buildMenuCard([
@@ -210,8 +200,6 @@ class ProfileView extends StatelessWidget {
               ]),
 
               const SizedBox(height: 20),
-
-              // BANTUAN
               _buildSectionTitle('Bantuan'),
               const SizedBox(height: 8),
               _buildMenuCard([
@@ -222,8 +210,6 @@ class ProfileView extends StatelessWidget {
               ]),
 
               const SizedBox(height: 20),
-
-              // KELUAR
               Center(
                 child: GestureDetector(
                   onTap: () {},
@@ -232,7 +218,7 @@ class ProfileView extends StatelessWidget {
                       Icon(
                         HugeIcons.strokeRoundedLogout01,
                         size: 24,
-                        color: Colors.redAccent,
+                        color: Colors.red[500],
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -240,7 +226,7 @@ class ProfileView extends StatelessWidget {
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: Colors.redAccent,
+                          color: Colors.red[500],
                         ),
                       ),
                     ],
@@ -270,7 +256,7 @@ class ProfileView extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: const Color(0xFFFDFDFE),
+        color: Colors.grey[50],
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
@@ -292,13 +278,13 @@ class ProfileView extends StatelessWidget {
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black87,
+                    color: Colors.grey[700],
                   ),
                 ),
-                trailing: const Icon(
+                trailing: Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 16,
-                  color: Colors.grey,
+                  color: Colors.grey[700],
                 ),
                 onTap: () {},
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12),
