@@ -38,15 +38,26 @@ class HeaderSection extends StatelessWidget {
                 : Container(
                     width: 100,
                     height: 100,
-                    color: Colors.grey[500],
+                    color: Colors.grey[50],
                     alignment: Alignment.center,
-                    child: Text(
-                      'No Image',
-                      style: GoogleFonts.poppins(
-                        fontSize: 11,
-                        color: Colors.grey[500],
-                      ),
-                      textAlign: TextAlign.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          HugeIcons.strokeRoundedImage01,
+                          color: Colors.grey[500],
+                          size: 22,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'No Image',
+                          style: GoogleFonts.poppins(
+                            fontSize: 11,
+                            color: Colors.grey[500],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
           ),
@@ -162,7 +173,9 @@ class _RatingStars extends StatelessWidget {
         final filled = index < rating.floor();
         final half = index == rating.floor() && rating % 1 >= 0.5;
         return Icon(
-          half ? Icons.star_half_rounded : Icons.star_rounded,
+          half
+              ? Icons.star_half_rounded
+              : Icons.star_rounded,
           size: 12,
           color: filled || half ? Colors.amber[500] : Colors.grey[300],
         );

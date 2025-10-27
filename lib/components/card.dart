@@ -173,7 +173,8 @@ class RatingStars extends StatelessWidget {
         final filled = index < rating.floor();
         final half = index == rating.floor() && rating % 1 >= 0.5;
         return Icon(
-          half ? Icons.star_half_rounded : Icons.star_rounded,
+          half
+              ? Icons.star_half_rounded : Icons.star_rounded,
           size: 12,
           color: filled || half ? Colors.amber[500] : Colors.grey[300],
         );

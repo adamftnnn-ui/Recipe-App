@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class ChatBubble extends StatelessWidget {
   final String avatar;
@@ -63,7 +64,7 @@ class ChatBubble extends StatelessWidget {
                       backgroundColor: Colors.grey[500],
                       child: avatar.isEmpty
                           ? const Icon(
-                              Icons.person,
+                              HugeIcons.strokeRoundedUser,
                               size: 16,
                               color: Colors.white,
                             )

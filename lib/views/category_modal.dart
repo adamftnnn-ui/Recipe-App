@@ -92,7 +92,7 @@ class CategoryModal extends StatelessWidget {
                         ],
                       ),
                       child: Icon(
-                        Icons.arrow_back_ios_new_rounded,
+                        HugeIcons.strokeRoundedArrowLeft01,
                         size: 17,
                         color: Colors.grey[500],
                       ),
@@ -155,7 +155,7 @@ class CategoryModal extends StatelessWidget {
                             ),
                           ),
                           Icon(
-                            Icons.arrow_forward_ios_rounded,
+                            HugeIcons.strokeRoundedArrowRight01,
                             size: 16,
                             color: Colors.grey[700],
                           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hugeicons/hugeicons.dart';
 import '../controllers/search_controller.dart';
 import '../components/search_bar.dart';
 import 'recipe_list_view.dart';
@@ -65,7 +66,7 @@ class _SearchViewState extends State<SearchView> {
                         ],
                       ),
                       child: const Icon(
-                        Icons.arrow_back_ios_new_rounded,
+                        HugeIcons.strokeRoundedArrowLeft01,
                         size: 18,
                         color: Colors.black87,
                       ),

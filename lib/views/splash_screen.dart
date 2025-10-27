@@ -24,7 +24,6 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(milliseconds: 1600),
     );
 
-    // Scale dengan bounce effect
     _scaleAnimation = TweenSequence([
       TweenSequenceItem(
         tween: Tween(
@@ -42,13 +41,11 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     ]).animate(_controller);
 
-    // Fade in
     _fadeAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeIn));
 
-    // Slide dari bawah ke atas sedikit
     _slideAnimation = Tween<double>(
       begin: 30,
       end: 0,

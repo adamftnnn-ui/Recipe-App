@@ -38,7 +38,7 @@ class InfoBox extends StatelessWidget {
       hintStyle: GoogleFonts.poppins(fontSize: 13.5, color: Colors.grey[500]),
       filled: true,
       fillColor: Colors.grey[50],
-      contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
         borderSide: BorderSide(color: Colors.grey[300]!, width: 1),
@@ -84,12 +84,23 @@ class InfoBox extends StatelessWidget {
                       width: double.infinity,
                       color: Colors.grey[50],
                       alignment: Alignment.center,
-                      child: Text(
-                        'Tap untuk tambah gambar',
-                        style: GoogleFonts.poppins(
-                          fontSize: 13,
-                          color: Colors.grey[500],
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            HugeIcons.strokeRoundedImage01,
+                            color: Colors.grey[500],
+                            size: 26,
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            'Tap untuk tambah gambar',
+                            style: GoogleFonts.poppins(
+                              fontSize: 13,
+                              color: Colors.grey[500],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
             ),
@@ -106,7 +117,13 @@ class InfoBox extends StatelessWidget {
           const SizedBox(height: 4),
           TextField(
             controller: titleController,
-            decoration: _inputDecoration('Judul resep kamu...'),
+            decoration: _inputDecoration('Judul resep kamu...').copyWith(
+              prefixIcon: Icon(
+                HugeIcons.strokeRoundedBookOpen01,
+                size: 18,
+                color: Colors.grey[500],
+              ),
+            ),
             onChanged: onTitleChanged,
           ),
           const SizedBox(height: 14),
@@ -127,9 +144,13 @@ class InfoBox extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     DropdownButtonFormField<String>(
-                      decoration: _inputDecoration(
-                        'Negara',
-                      ).copyWith(isDense: true),
+                      decoration: _inputDecoration('Negara').copyWith(
+                        prefixIcon: Icon(
+                          HugeIcons.strokeRoundedEarth,
+                          size: 18,
+                          color: Colors.grey[500],
+                        ),
+                      ),
                       items: ['Indonesia', 'Italy', 'Japan', 'India']
                           .map(
                             (e) => DropdownMenuItem(
@@ -181,12 +202,22 @@ class InfoBox extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Halal',
-                            style: GoogleFonts.poppins(
-                              fontSize: 13.5,
-                              color: Colors.grey[500],
-                            ),
+                          Row(
+                            children: [
+                              Icon(
+                                HugeIcons.strokeRoundedTag01,
+                                size: 18,
+                                color: Colors.grey[500],
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                'Halal',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 13.5,
+                                  color: Colors.grey[500],
+                                ),
+                              ),
+                            ],
                           ),
                           Switch(
                             value: isHalal,
@@ -223,6 +254,11 @@ class InfoBox extends StatelessWidget {
                       controller: timeController,
                       keyboardType: TextInputType.number,
                       decoration: _inputDecoration('0').copyWith(
+                        prefixIcon: Icon(
+                          HugeIcons.strokeRoundedClock01,
+                          size: 18,
+                          color: Colors.grey[500],
+                        ),
                         suffixText: 'Menit',
                         suffixStyle: GoogleFonts.poppins(
                           color: Colors.grey[500],
@@ -252,6 +288,11 @@ class InfoBox extends StatelessWidget {
                       controller: servingController,
                       keyboardType: TextInputType.number,
                       decoration: _inputDecoration('0').copyWith(
+                        prefixIcon: Icon(
+                          HugeIcons.strokeRoundedRiceBowl01,
+                          size: 18,
+                          color: Colors.grey[500],
+                        ),
                         suffixText: 'Porsi',
                         suffixStyle: GoogleFonts.poppins(
                           color: Colors.grey[500],

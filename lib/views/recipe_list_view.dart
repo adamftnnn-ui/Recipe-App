@@ -1,6 +1,7 @@
 // lib/views/recipe_list_view.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hugeicons/hugeicons.dart';
 import '../controllers/recipe_controller.dart';
 import '../components/card.dart';
 import '../components/search_bar.dart';
@@ -97,7 +98,7 @@ class _RecipeListViewState extends State<RecipeListView>
                         ],
                       ),
                       child: const Icon(
-                        Icons.arrow_back_ios_new_rounded,
+                        HugeIcons.strokeRoundedArrowLeft01,
                         size: 18,
                         color: Colors.black87,
                       ),
@@ -139,7 +140,7 @@ class _RecipeListViewState extends State<RecipeListView>
                           child: Column(
                             children: [
                               Icon(
-                                Icons.search_off_rounded,
+                                HugeIcons.strokeRoundedSearch01,
                                 color: Colors.grey[300],
                                 size: 60,
                               ),

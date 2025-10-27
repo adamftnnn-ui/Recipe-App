@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_application_1/components/nutrition_section.dart';
+import 'package:hugeicons/hugeicons.dart';
 import '../controllers/detail_recipe_controller.dart';
 import '../components/header_section.dart';
 import '../components/ingredients_section.dart';
@@ -41,7 +42,7 @@ class DetailRecipeView extends StatelessWidget {
                         ],
                       ),
                       child: const Icon(
-                        Icons.arrow_back_ios_new_rounded,
+                        HugeIcons.strokeRoundedArrowLeft01,
                         size: 18,
                         color: Colors.black87,
                       ),
