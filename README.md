@@ -17,10 +17,10 @@ Menggunakan **data dummy** pada tahap awal agar UI/UX bisa diuji sebelum integra
 ## Halaman Utama
 1. **Splash Screen** – Tampilan awal dengan logo aplikasi.  
 2. **Beranda** – Daftar kategori dan resep, bisa menelusuri resep tertentu.  
-3. **Detail Resep** – Informasi lengkap resep: bahan, langkah, foto.  
-4. **Buat Resep** – Tambah resep baru dengan nama, bahan, langkah, kategori.  
-5. **Obrolan** – Fitur percakapan antar pengguna.  
-6. **Profil** – Data pengguna, edit akun, logout, personalisasi konten.
+3. **Detail Resep** – Informasi lengkap resep: bahan, langkah, foto, nutrisi.  
+4. **Buat Resep** – Tambah resep baru dengan nama, bahan, langkah, nutrisi.  
+5. **Obrolan** – Fitur percakapan dengan AI.  
+6. **Profil** – Data pengguna, edit akun, logout, personalisasi.
 
 ---
 
