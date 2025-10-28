@@ -143,7 +143,7 @@ class _SearchViewState extends State<SearchView> {
                                 children: [
                                   Icon(
                                     Icons.history_rounded,
-                                    color: Colors.grey[300],
+                                    color: Colors.grey[500],
                                     size: 20,
                                   ),
                                   const SizedBox(width: 10),
@@ -153,7 +153,7 @@ class _SearchViewState extends State<SearchView> {
                                       style: GoogleFonts.poppins(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w400,
-                                        color: Colors.grey[300],
+                                        color: Colors.grey[500],
                                         letterSpacing: 0.1,
                                       ),
                                     ),

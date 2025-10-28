@@ -66,6 +66,7 @@ class InfoBox extends StatelessWidget {
         ],
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min, // ✅ penting agar tinggi fleksibel
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
@@ -130,7 +131,6 @@ class InfoBox extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                flex: 1,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -176,7 +176,6 @@ class InfoBox extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Expanded(
-                flex: 1,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
