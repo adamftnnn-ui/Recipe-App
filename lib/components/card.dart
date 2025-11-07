@@ -1,33 +1,41 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_application_1/views/detail_recipe_view.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:hugeicons/hugeicons.dart';
+
 import '../controllers/detail_recipe_controller.dart';
 
 class RecipeCard extends StatelessWidget {
-  final dynamic recipe; // bisa Map atau RecipeModel
+  // Semua properti sekarang adalah final, datanya sudah diolah sebelum dimasukkan
+  final dynamic
+  recipe; // Tetap dynamic untuk diteruskan ke DetailRecipeController
+  final String image;
+  final String title;
+  final bool isHalal;
+  final String country;
+  final String readyInMinutes;
+  final String servings;
+  final double rating;
 
-  const RecipeCard({super.key, required this.recipe});
+  // Constructor menerima semua data yang diperlukan
+  const RecipeCard({
+    super.key,
+    required this.recipe,
+    required this.image,
+    required this.title,
+    required this.isHalal,
+    required this.country,
+    required this.readyInMinutes,
+    required this.servings,
+    required this.rating,
+  });
 
-  bool get _isMap => recipe is Map;
-
-  // Getter dinamis
-  String get image => _isMap ? (recipe['image'] ?? '') : (recipe.image ?? '');
-  String get title => _isMap ? (recipe['title'] ?? '-') : (recipe.title ?? '-');
-  bool get isHalal =>
-      _isMap ? (recipe['isHalal'] ?? false) : (recipe.isHalal ?? false);
-  String get country =>
-      _isMap ? (recipe['country'] ?? '') : (recipe.country ?? '');
-  String get time => _isMap
-      ? (recipe['readyInMinutes'] != null
-            ? '${recipe['readyInMinutes']}'
-            : '—')
-      : (recipe.time ?? '—');
-  String get serving => _isMap
-      ? (recipe['servings'] != null ? '${recipe['servings']}' : '—')
-      : (recipe.serving ?? '—');
-  double get rating =>
-      _isMap ? (recipe['rating'] ?? 4.0).toDouble() : (recipe.rating ?? 4.0);
+  // Catatan: Logika pengambilan data dari 'recipe' (Map atau Model)
+  // yang sebelumnya ada di getter (misalnya, _isMap ? recipe['title'] : recipe.title)
+  // HARUS dipindahkan ke parent widget yang memanggil RecipeCard ini.
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +45,7 @@ class RecipeCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (_) => DetailRecipeView(
+              // recipe dynamic tetap diteruskan untuk DetailRecipeController
               controller: DetailRecipeController(recipe: recipe),
             ),
           ),
@@ -102,7 +111,7 @@ class RecipeCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          title,
+                          title, // Menggunakan field final
                           style: GoogleFonts.poppins(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -111,7 +120,7 @@ class RecipeCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      if (isHalal)
+                      if (isHalal) // Menggunakan field final
                         Container(
                           height: 18,
                           width: 18,
@@ -130,7 +139,7 @@ class RecipeCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    country,
+                    country, // Menggunakan field final
                     style: GoogleFonts.poppins(
                       fontSize: 11,
                       color: Colors.grey[500],
@@ -143,12 +152,18 @@ class RecipeCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          InfoItem(HugeIcons.strokeRoundedClock01, time),
+                          InfoItem(
+                            HugeIcons.strokeRoundedClock01,
+                            readyInMinutes,
+                          ), // Menggunakan field final
                           const SizedBox(width: 6),
-                          InfoItem(HugeIcons.strokeRoundedRiceBowl01, serving),
+                          InfoItem(
+                            HugeIcons.strokeRoundedRiceBowl01,
+                            servings,
+                          ), // Menggunakan field final
                         ],
                       ),
-                      RatingStars(rating),
+                      RatingStars(rating), // Menggunakan field final
                     ],
                   ),
                 ],
@@ -161,6 +176,7 @@ class RecipeCard extends StatelessWidget {
   }
 }
 
+// Class InfoItem dan RatingStars tidak ada perubahan karena sudah dinamis
 class InfoItem extends StatelessWidget {
   final IconData icon;
   final String text;

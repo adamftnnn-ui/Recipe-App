@@ -4,8 +4,8 @@ class RecipeModel {
   final String title;
   final String country;
   final bool isHalal;
-  final String time;
-  final String serving;
+  final String readyInMinutes;
+  final String servings;
   final double rating;
   final List<String> ingredients;
   final List<String> instructions;
@@ -16,8 +16,8 @@ class RecipeModel {
     required this.title,
     required this.country,
     required this.isHalal,
-    required this.time,
-    required this.serving,
+    required this.readyInMinutes,
+    required this.servings,
     required this.rating,
     required this.ingredients,
     required this.instructions,

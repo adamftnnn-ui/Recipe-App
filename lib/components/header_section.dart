@@ -1,3 +1,4 @@
+// HeaderSection.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -6,10 +7,40 @@ import '../../models/recipe_model.dart';
 class HeaderSection extends StatelessWidget {
   final RecipeModel recipe;
 
-  const HeaderSection({required this.recipe});
+  const HeaderSection({super.key, required this.recipe});
+
+  // Placeholder jika tidak ada gambar
+  Widget _buildNoImagePlaceholder() {
+    return Container(
+      width: 100,
+      height: 100,
+      color: Colors.grey[50],
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            HugeIcons.strokeRoundedImage01,
+            color: Colors.grey[500],
+            size: 22,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'No Image',
+            style: GoogleFonts.poppins(fontSize: 11, color: Colors.grey[500]),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    // Bersihkan tanda kutip/spasi di string URL
+    final String cleanImage = recipe.image.replaceAll('"', '').trim();
+    final bool isNetworkImage = cleanImage.startsWith('http');
+
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -28,38 +59,35 @@ class HeaderSection extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(14),
-            child: recipe.image.isNotEmpty
-                ? Image.asset(
-                    recipe.image,
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.cover,
-                  )
-                : Container(
-                    width: 100,
-                    height: 100,
-                    color: Colors.grey[50],
-                    alignment: Alignment.center,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          HugeIcons.strokeRoundedImage01,
-                          color: Colors.grey[500],
-                          size: 22,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'No Image',
-                          style: GoogleFonts.poppins(
-                            fontSize: 11,
-                            color: Colors.grey[500],
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
+            child: cleanImage.isNotEmpty
+                ? (isNetworkImage
+                      ? Image.network(
+                          cleanImage,
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Container(
+                              width: 100,
+                              height: 100,
+                              color: Colors.grey[200],
+                            );
+                          },
+                          errorBuilder: (context, error, stackTrace) {
+                            return _buildNoImagePlaceholder();
+                          },
+                        )
+                      : Image.asset(
+                          cleanImage,
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return _buildNoImagePlaceholder();
+                          },
+                        ))
+                : _buildNoImagePlaceholder(),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -106,12 +134,12 @@ class HeaderSection extends StatelessWidget {
                   children: [
                     _InfoItem(
                       icon: HugeIcons.strokeRoundedClock01,
-                      text: '${recipe.time} Menit',
+                      text: '${recipe.readyInMinutes} Menit',
                     ),
                     const SizedBox(width: 8),
                     _InfoItem(
                       icon: HugeIcons.strokeRoundedRiceBowl01,
-                      text: '${recipe.serving} Porsi',
+                      text: '${recipe.servings} Porsi',
                     ),
                   ],
                 ),
@@ -173,9 +201,7 @@ class _RatingStars extends StatelessWidget {
         final filled = index < rating.floor();
         final half = index == rating.floor() && rating % 1 >= 0.5;
         return Icon(
-          half
-              ? Icons.star_half_rounded
-              : Icons.star_rounded,
+          half ? Icons.star_half_rounded : Icons.star_rounded,
           size: 12,
           color: filled || half ? Colors.amber[500] : Colors.grey[300],
         );

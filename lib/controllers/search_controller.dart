@@ -32,7 +32,7 @@ class SearchBarrController {
   }
 
   // Metode untuk mendapatkan riwayat
-  List<SearchHistoryModel> getHistory() => List.from(_history);
+  List<dynamic> getHistory() => List.from(_history);
 
   // Metode untuk membersihkan seluruh riwayat
   void clearHistory() => _history.clear();

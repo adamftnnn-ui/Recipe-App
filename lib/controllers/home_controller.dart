@@ -31,14 +31,14 @@ class HomeController {
     'Rawon Daging',
   ];
 
-  final List<RecipeModel> trendingRecipes = [
+  final List<dynamic> trendingRecipes = [
     RecipeModel(
       image: 'assets/images/banner2.png',
       title: 'Nasi Goreng Spesial',
       country: 'Indonesia',
       isHalal: true,
-      time: '15′',
-      serving: '2',
+      readyInMinutes: '15′',
+      servings: '2',
       rating: 4.8,
       ingredients: [
         'Nasi putih 2 piring',
@@ -64,8 +64,8 @@ class HomeController {
       title: 'Ayam Bakar Madu',
       country: 'Indonesia',
       isHalal: true,
-      time: '25′',
-      serving: '3',
+      readyInMinutes: '25′',
+      servings: '3',
       rating: 4.9,
       ingredients: [
         'Ayam 500 gr',

@@ -3,18 +3,19 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 import '../components/card.dart';
 import '../components/search_bar.dart';
+import '../controllers/recipe_list_controller.dart';
+import '../controllers/api_services.dart';
 
 class RecipeListView extends StatefulWidget {
   final String initialKeyword;
   final String title;
-  final List<dynamic> recipes;
+  final List<dynamic>? recipes;
 
   const RecipeListView({
     super.key,
     required this.initialKeyword,
-    // ✅ DYNAMIC: Tetap gunakan default value, tetapi ini dari properti.
     this.title = 'Daftar Resep',
-    required this.recipes,
+    this.recipes,
   });
 
   @override
@@ -25,10 +26,14 @@ class _RecipeListViewState extends State<RecipeListView>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeIn;
+  late RecipeListController controller;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
+
+    controller = RecipeListController(ApiService());
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 450),
@@ -38,8 +43,18 @@ class _RecipeListViewState extends State<RecipeListView>
       curve: Curves.easeOutCubic,
     );
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _animationController.forward();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // Jika caller menyediakan daftar resep (mis. dari SearchView atau Trending),
+      // gunakan data tersebut dan hindari pemanggilan API ulang.
+      if (widget.recipes != null && widget.recipes!.isNotEmpty) {
+        controller.recipes.value = widget.recipes!;
+        _animationController.forward();
+        setState(() => isLoading = false);
+      } else {
+        await controller.fetchRecipesByQuery(widget.initialKeyword);
+        _animationController.forward();
+        setState(() => isLoading = false);
+      }
     });
   }
 
@@ -49,27 +64,15 @@ class _RecipeListViewState extends State<RecipeListView>
     super.dispose();
   }
 
-  // TODO: Tambahkan fungsi untuk menangani pencarian ulang jika SearchBarr digunakan
-  // Misalnya: Future<void> _handleReSearch(String newKeyword) async { ... }
-
   @override
   Widget build(BuildContext context) {
-    // ✅ DYNAMIC: Menggunakan Theme untuk warna latar belakang
     final theme = Theme.of(context);
-
     final double spacing = 14;
     final double screenWidth = MediaQuery.of(context).size.width;
-    // ✅ DYNAMIC: Perhitungan lebar kartu agar dinamis sesuai ukuran layar
-    // Mengasumsikan layout 2 kolom: (Lebar Layar - Total Padding Samping - Jarak Antar Kartu) / 2
     final double infoCardWidth = (screenWidth - (20 * 2) - spacing) / 2;
-
-    final recipes = widget.recipes;
-
-    // 🚫 Hapus print debugging statis: print('recipes: $recipes');
 
     return SafeArea(
       child: Scaffold(
-        // ✅ DYNAMIC: Gunakan warna background dari Theme
         backgroundColor: theme.scaffoldBackgroundColor,
         body: Column(
           children: [
@@ -105,7 +108,6 @@ class _RecipeListViewState extends State<RecipeListView>
                   Expanded(
                     child: Center(
                       child: Text(
-                        // ✅ DYNAMIC: Menggunakan title dari properti widget
                         widget.title,
                         style: GoogleFonts.poppins(
                           fontSize: 18,
@@ -121,25 +123,28 @@ class _RecipeListViewState extends State<RecipeListView>
               ),
             ),
 
-            // --- Search Bar dengan Keyword Awal ---
+            // --- Search Bar ---
             SearchBarr(
               initialValue: widget.initialKeyword,
-              // ✅ DYNAMIC: Atur ini menjadi true jika user bisa tap untuk navigasi ke Search View
               enableNavigation: true,
-              // Jika Anda ingin user bisa search ulang di halaman ini:
-              // onSubmitted: _handleReSearch,
               padding: const EdgeInsets.fromLTRB(20, 6, 20, 8),
             ),
 
             const SizedBox(height: 8),
 
-            // --- Daftar Resep / Empty State ---
+            // --- Daftar Resep / Loading / Empty ---
             Expanded(
               child: FadeTransition(
                 opacity: _fadeIn,
-                child: recipes.isEmpty
-                    ? Center(
-                        // ✅ DYNAMIC: Empty State (Ketika recipes kosong)
+                child: ValueListenableBuilder<List<dynamic>>(
+                  valueListenable: controller.recipes,
+                  builder: (context, recipes, _) {
+                    if (isLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    if (recipes.isEmpty) {
+                      return Center(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 120),
                           child: Column(
@@ -152,13 +157,10 @@ class _RecipeListViewState extends State<RecipeListView>
                               ),
                               const SizedBox(height: 14),
                               Text(
-                                // ✅ DYNAMIC: Pesan disesuaikan dengan keyword
                                 'Tidak ada resep untuk "${widget.initialKeyword}"',
                                 style: GoogleFonts.poppins(
                                   fontSize: 15,
-                                  color: theme
-                                      .colorScheme
-                                      .error, // ✅ DYNAMIC: Gunakan warna error dari tema
+                                  color: theme.colorScheme.error,
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 0.2,
                                 ),
@@ -166,37 +168,38 @@ class _RecipeListViewState extends State<RecipeListView>
                             ],
                           ),
                         ),
-                      )
-                    : SingleChildScrollView(
-                        // ✅ DYNAMIC: Daftar resep (Ketika recipes tidak kosong)
-                        physics: const BouncingScrollPhysics(),
-                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Wrap(
-                            spacing: spacing,
-                            runSpacing: spacing,
-                            // ✅ DYNAMIC: Mapping data resep
-                            children: recipes.map((recipe) {
-                              // Asumsi: recipe adalah Map<String, dynamic>
-                              return SizedBox(
-                                width: infoCardWidth,
-                                child: RecipeCard(
-                                  // ✅ DYNAMIC: Pastikan data yang dilempar sesuai kontrak RecipeCard
-                                  recipe: {
-                                    'id': recipe['id'],
-                                    'title': recipe['title'],
-                                    'image': recipe['image'],
-                                    'readyInMinutes': recipe['readyInMinutes'],
-                                    'servings': recipe['servings'],
-                                    'sourceUrl': recipe['sourceUrl'],
-                                  },
-                                ),
-                              );
-                            }).toList(),
-                          ),
+                      );
+                    }
+
+                    return SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Wrap(
+                          spacing: spacing,
+                          runSpacing: spacing,
+                          children: recipes.map((recipe) {
+                            return SizedBox(
+                              width: infoCardWidth,
+                              child: RecipeCard(
+                                recipe: recipe,
+                                image: recipe['image'] ?? '',
+                                title: recipe['title'] ?? 'Tanpa Judul',
+                                isHalal: recipe['isHalal'] ?? true,
+                                country: recipe['country'] ?? 'Tidak Diketahui',
+                                readyInMinutes:
+                                    '${recipe['readyInMinutes'] ?? '-'}',
+                                servings: '${recipe['servings'] ?? '-'}',
+                                rating: (recipe['rating'] ?? 4.5).toDouble(),
+                              ),
+                            );
+                          }).toList(),
                         ),
                       ),
+                    );
+                  },
+                ),
               ),
             ),
           ],

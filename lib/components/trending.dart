@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../models/recipe_model.dart';
+// Asumsikan ini adalah versi RecipeCard yang telah diubah menjadi dinamis
 import '../components/card.dart';
 import '../../views/recipe_list_view.dart';
 
 class Trending extends StatelessWidget {
+  // Properti sudah final (dinamis), tidak ada statis.
   final List<RecipeModel> recipes;
 
   const Trending({super.key, required this.recipes});
@@ -35,9 +37,10 @@ class Trending extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (_) => RecipeListView(
+                        // Nilai-nilai di sini sudah dinamis (bukan statis) karena ditetapkan saat runtime
                         initialKeyword: '',
                         title: 'Resep Trending',
-                        recipes: []
+                        recipes: const [],
                       ),
                     ),
                   );
@@ -64,7 +67,22 @@ class Trending extends StatelessWidget {
               separatorBuilder: (_, __) => const SizedBox(width: 16),
               itemBuilder: (context, index) {
                 final item = recipes[index];
-                return RecipeCard(recipe: item);
+
+                // PENTING: Jika RecipeCard diubah menjadi dinamis (tidak lagi menggunakan getter
+                // untuk Map/Model), kita perlu memetakan data di sini:
+                return RecipeCard(
+                  recipe: item, // Meneruskan objek model aslinya
+                  image: item.image, // Meneruskan properti secara eksplisit
+                  title: item.title,
+                  isHalal: item.isHalal,
+                  country: item.country,
+                  readyInMinutes:
+                      item.readyInMinutes?.toString() ??
+                      '—', // Asumsi nama field
+                  servings:
+                      item.servings?.toString() ?? '—', // Asumsi nama field
+                  rating: item.rating?.toDouble() ?? 4.0, // Asumsi nama field
+                );
               },
             ),
           ),
