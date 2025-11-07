@@ -2,13 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/views/detail_recipe_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
-import '../../models/recipe_model.dart';
 import '../controllers/detail_recipe_controller.dart';
 
 class RecipeCard extends StatelessWidget {
-  final RecipeModel recipe;
+  final dynamic recipe; // bisa Map atau RecipeModel
 
   const RecipeCard({super.key, required this.recipe});
+
+  bool get _isMap => recipe is Map;
+
+  // Getter dinamis
+  String get image => _isMap ? (recipe['image'] ?? '') : (recipe.image ?? '');
+  String get title => _isMap ? (recipe['title'] ?? '-') : (recipe.title ?? '-');
+  bool get isHalal =>
+      _isMap ? (recipe['isHalal'] ?? false) : (recipe.isHalal ?? false);
+  String get country =>
+      _isMap ? (recipe['country'] ?? '') : (recipe.country ?? '');
+  String get time => _isMap
+      ? (recipe['readyInMinutes'] != null
+            ? '${recipe['readyInMinutes']}'
+            : '—')
+      : (recipe.time ?? '—');
+  String get serving => _isMap
+      ? (recipe['servings'] != null ? '${recipe['servings']}' : '—')
+      : (recipe.serving ?? '—');
+  double get rating =>
+      _isMap ? (recipe['rating'] ?? 4.0).toDouble() : (recipe.rating ?? 4.0);
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +64,20 @@ class RecipeCard extends StatelessWidget {
                 topLeft: Radius.circular(18),
                 topRight: Radius.circular(18),
               ),
-              child: recipe.image.isNotEmpty
-                  ? Image.asset(
-                      recipe.image,
-                      height: 110,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    )
+              child: image.isNotEmpty
+                  ? (image.startsWith('http')
+                        ? Image.network(
+                            image,
+                            height: 110,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            image,
+                            height: 110,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ))
                   : Container(
                       height: 110,
                       width: double.infinity,
@@ -76,7 +102,7 @@ class RecipeCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          recipe.title,
+                          title,
                           style: GoogleFonts.poppins(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -85,7 +111,7 @@ class RecipeCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      if (recipe.isHalal)
+                      if (isHalal)
                         Container(
                           height: 18,
                           width: 18,
@@ -104,7 +130,7 @@ class RecipeCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    recipe.country,
+                    country,
                     style: GoogleFonts.poppins(
                       fontSize: 11,
                       color: Colors.grey[500],
@@ -117,15 +143,12 @@ class RecipeCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          InfoItem(HugeIcons.strokeRoundedClock01, recipe.time),
+                          InfoItem(HugeIcons.strokeRoundedClock01, time),
                           const SizedBox(width: 6),
-                          InfoItem(
-                            HugeIcons.strokeRoundedRiceBowl01,
-                            recipe.serving,
-                          ),
+                          InfoItem(HugeIcons.strokeRoundedRiceBowl01, serving),
                         ],
                       ),
-                      RatingStars(recipe.rating),
+                      RatingStars(rating),
                     ],
                   ),
                 ],
@@ -173,8 +196,7 @@ class RatingStars extends StatelessWidget {
         final filled = index < rating.floor();
         final half = index == rating.floor() && rating % 1 >= 0.5;
         return Icon(
-          half
-              ? Icons.star_half_rounded : Icons.star_rounded,
+          half ? Icons.star_half_rounded : Icons.star_rounded,
           size: 12,
           color: filled || half ? Colors.amber[500] : Colors.grey[300],
         );

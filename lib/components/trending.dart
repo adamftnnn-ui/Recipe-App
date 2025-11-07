@@ -37,6 +37,7 @@ class Trending extends StatelessWidget {
                       builder: (_) => RecipeListView(
                         initialKeyword: '',
                         title: 'Resep Trending',
+                        recipes: []
                       ),
                     ),
                   );
