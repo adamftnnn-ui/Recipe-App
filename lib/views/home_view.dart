@@ -41,18 +41,18 @@ class _HomeViewState extends State<HomeView> {
   ];
 
   @override
+@override
   void initState() {
     super.initState();
-    // Inisialisasi controller
     _recipeListController = RecipeListController(_apiService);
     _trendingController = TrendingRecipeController(_apiService);
-    _eventController = EventController(_apiService);
+    _eventController = EventController(); // ✅ tanpa argumen
 
-    // Panggil fetching data
     _recipeListController.fetchSuggestionsFromApi();
     _trendingController.fetchTrendingRecipes();
     _eventController.fetchAllEvents();
   }
+
 
   @override
   void dispose() {
