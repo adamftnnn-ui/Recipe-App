@@ -35,7 +35,7 @@ class HeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String cleanImage = recipe.image.replaceAll('"', '').trim();
+    final String cleanImage = recipe.image.trim();
     final bool isNetworkImage = cleanImage.startsWith('http');
 
     return Container(

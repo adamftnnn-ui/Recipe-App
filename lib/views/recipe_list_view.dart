@@ -49,7 +49,7 @@ class _RecipeListViewState extends State<RecipeListView>
       } else {
         await controller.fetchRecipesByFilter(
           widget.initialKeyword,
-        ); // <-- Ganti di sini
+        );
         _animationController.forward();
         setState(() => isLoading = false);
       }

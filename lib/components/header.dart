@@ -42,11 +42,16 @@ class HeaderWidget extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: Colors.grey[300]!, width: 1),
-              image: DecorationImage(
-                image: AssetImage(user.avatarUrl),
-                fit: BoxFit.cover,
-              ),
+              image: user.avatarUrl.isNotEmpty
+                  ? DecorationImage(
+                      image: NetworkImage(user.avatarUrl),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
             ),
+            child: user.avatarUrl.isEmpty
+                ? Icon(Icons.person, color: Colors.grey[500], size: 28)
+                : null,
           ),
         ],
       ),

@@ -4,6 +4,7 @@ class ChatMessage {
   final String? role;
   final String message;
   final String time;
+  final bool isAssistant;
 
   ChatMessage({
     required this.avatarUrl,
@@ -11,5 +12,6 @@ class ChatMessage {
     this.role,
     required this.message,
     required this.time,
+    required this.isAssistant,
   });
 }

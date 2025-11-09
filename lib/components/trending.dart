@@ -1,13 +1,10 @@
-// lib/views/components/trending.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../models/recipe_model.dart';
-// Asumsikan ini adalah versi RecipeCard yang telah diubah menjadi dinamis
 import '../components/card.dart';
 import '../../views/recipe_list_view.dart';
 
 class Trending extends StatelessWidget {
-  // Properti sudah final (dinamis), tidak ada statis.
   final List<RecipeModel> recipes;
 
   const Trending({super.key, required this.recipes});
@@ -37,10 +34,23 @@ class Trending extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (_) => RecipeListView(
-                        // Nilai-nilai di sini sudah dinamis (bukan statis) karena ditetapkan saat runtime
-                        initialKeyword: '',
+                        initialKeyword:
+                            '',
                         title: 'Resep Trending',
-                        recipes: const [],
+                        recipes: recipes
+                            .map(
+                              (r) => {
+                                'image': r.image,
+                                'title': r.title,
+                                'isHalal': r.isHalal,
+                                'country': r.country,
+                                'readyInMinutes': r.readyInMinutes,
+                                'servings': r.servings,
+                                'rating': r.rating,
+                                'id': r.id,
+                              },
+                            )
+                            .toList(),
                       ),
                     ),
                   );
@@ -68,20 +78,15 @@ class Trending extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = recipes[index];
 
-                // PENTING: Jika RecipeCard diubah menjadi dinamis (tidak lagi menggunakan getter
-                // untuk Map/Model), kita perlu memetakan data di sini:
                 return RecipeCard(
-                  recipe: item, // Meneruskan objek model aslinya
-                  image: item.image, // Meneruskan properti secara eksplisit
+                  recipe: item,
+                  image: item.image,
                   title: item.title,
                   isHalal: item.isHalal,
                   country: item.country,
-                  readyInMinutes:
-                      item.readyInMinutes?.toString() ??
-                      '—', // Asumsi nama field
-                  servings:
-                      item.servings?.toString() ?? '—', // Asumsi nama field
-                  rating: item.rating?.toDouble() ?? 4.0, // Asumsi nama field
+                  readyInMinutes: item.readyInMinutes?.toString() ?? '—',
+                  servings: item.servings?.toString() ?? '—',
+                  rating: item.rating?.toDouble() ?? 4.0,
                 );
               },
             ),

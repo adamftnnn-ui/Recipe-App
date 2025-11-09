@@ -8,6 +8,8 @@ class IngredientsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (ingredients.isEmpty) return const SizedBox.shrink();
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(12),
@@ -43,7 +45,7 @@ class IngredientsSection extends StatelessWidget {
                     BoxShadow(
                       color: Colors.black.withOpacity(0.04),
                       blurRadius: 4,
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),

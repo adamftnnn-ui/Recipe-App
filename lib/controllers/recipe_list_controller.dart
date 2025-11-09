@@ -12,15 +12,10 @@ class RecipeListController {
       final result = await ApiService.getData("recipes/random?number=6");
       if (result != null && result.containsKey('recipes')) {
         final List<String> newSuggestions = (result['recipes'] as List)
-            .map(
-              (item) =>
-                  (item['title'] ?? '').toString().split(' ').take(2).join(' '),
-            )
+            .map((item) => item['title']?.toString() ?? '')
             .where((s) => s.isNotEmpty)
             .toList();
-        suggestions.value = newSuggestions.isNotEmpty
-            ? newSuggestions
-            : ['Nasi Goreng', 'Sop Ayam', 'Ikan Bakar'];
+        suggestions.value = newSuggestions;
       } else {
         suggestions.value = ['Nasi Goreng', 'Sop Ayam', 'Ikan Bakar'];
       }
@@ -34,8 +29,8 @@ class RecipeListController {
     try {
       if (filter.isEmpty) return;
       final q = Uri.encodeQueryComponent(filter);
-      final result = await ApiService.getData(
-        "recipes/complexSearch?query=$q&number=20&addRecipeInformation=true",
+final result = await ApiService.getData(
+        "recipes/complexSearch?query=$q&number=20&addRecipeInformation=true&includeNutrition=true",
       );
       if (result != null && result.containsKey('results')) {
         final mapped = (result['results'] as List).map((item) {

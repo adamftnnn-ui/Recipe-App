@@ -1,4 +1,5 @@
 class RecipeModel {
+  final int id;
   final String image;
   final String title;
   final String country;
@@ -12,6 +13,7 @@ class RecipeModel {
   final Map<String, dynamic>? original;
 
   RecipeModel({
+    required this.id,
     required this.image,
     required this.title,
     required this.country,
@@ -28,6 +30,7 @@ class RecipeModel {
   factory RecipeModel.fromMap(dynamic m) {
     if (m == null) {
       return RecipeModel(
+        id: 0,
         image: '',
         title: 'Tanpa Judul',
         country: 'Global',
@@ -123,18 +126,23 @@ class RecipeModel {
 
     final isHalal = !(map['vegetarian'] == true || map['vegan'] == true);
 
-    final ready = map['readyInMinutes'] != null
-        ? map['readyInMinutes'].toString()
-        : (map['ready_time']?.toString() ?? '-');
-    final servings = map['servings'] != null
-        ? map['servings'].toString()
-        : (map['servings_count']?.toString() ?? '-');
+    final ready =
+        map['readyInMinutes']?.toString() ??
+        map['ready_time']?.toString() ??
+        '-';
+    final servings =
+        map['servings']?.toString() ?? map['servings_count']?.toString() ?? '-';
 
     final rating = (map['spoonacularScore'] is num)
         ? (map['spoonacularScore'] as num).toDouble() / 20.0 + 3.0
         : (map['rating'] is num ? (map['rating'] as num).toDouble() : 4.5);
 
+    final id = (map['id'] is int)
+        ? map['id'] as int
+        : int.tryParse(map['id']?.toString() ?? '') ?? 0;
+
     return RecipeModel(
+      id: id,
       image: extractImage(),
       title: map['title']?.toString() ?? 'Tanpa Judul',
       country: country,

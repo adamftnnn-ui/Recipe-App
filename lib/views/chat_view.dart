@@ -17,40 +17,26 @@ class _ChatViewState extends State<ChatView> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _inputController = TextEditingController();
 
-  final String _userAvatar = 'assets/images/avatar.jpg';
-  final String _assistantAvatar = 'assets/images/avatar_ai.jpg';
-
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.addInitialGreeting(_assistantAvatar, context);
+      controller.addInitialGreeting(context);
       setState(() {});
       _scrollToBottom();
     });
   }
 
-  void _sendMessage(String text) {
+  void _sendMessage(String text) async {
     if (text.trim().isEmpty) return;
 
-    setState(() {
-      controller.addUserMessage(text, _userAvatar, 'Adam', context);
-    });
-
+    controller.addUserMessage(text, context);
     _inputController.clear();
     _scrollToBottom();
 
-    Future.delayed(const Duration(milliseconds: 500), () {
-      setState(() {
-        controller.addAssistantMessage(
-          'Ini balasan AI.',
-          _assistantAvatar,
-          context,
-        );
-      });
-      _scrollToBottom();
-    });
+    await controller.getAssistantReply(text, context);
+    _scrollToBottom();
+    setState(() {});
   }
 
   void _scrollToBottom() {
@@ -72,7 +58,6 @@ class _ChatViewState extends State<ChatView> {
       body: SafeArea(
         child: Column(
           children: [
-            // HEADER
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 14),
               child: Center(
@@ -86,30 +71,33 @@ class _ChatViewState extends State<ChatView> {
                 ),
               ),
             ),
-
             Expanded(
-              child: ListView.builder(
-                controller: _scrollController,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
-                ),
-                physics: const BouncingScrollPhysics(),
-                itemCount: controller.chats.length,
-                itemBuilder: (context, index) {
-                  final ChatMessage chat = controller.chats[index];
-                  return ChatBubble(
-                    avatar: chat.avatarUrl,
-                    name: chat.name,
-                    role: chat.role,
-                    message: chat.message,
-                    time: chat.time,
-                    isAssistant: chat.role != null,
+              child: ValueListenableBuilder<List<ChatMessage>>(
+                valueListenable: controller.chatsNotifier,
+                builder: (context, chats, _) {
+                  return ListView.builder(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: chats.length,
+                    itemBuilder: (context, index) {
+                      final chat = chats[index];
+                      return ChatBubble(
+                        avatarUrl: chat.avatarUrl,
+                        name: chat.name,
+                        role: chat.role,
+                        message: chat.message,
+                        time: chat.time,
+                        isAssistant: chat.isAssistant,
+                      );
+                    },
                   );
                 },
               ),
             ),
-
             SearchBarr(
               enableNavigation: false,
               placeholder: 'Ketik pertanyaanmu disini...',
@@ -117,7 +105,6 @@ class _ChatViewState extends State<ChatView> {
               onSubmitted: _sendMessage,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
             ),
-
             const SizedBox(height: 16),
           ],
         ),

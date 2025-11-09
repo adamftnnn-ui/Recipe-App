@@ -45,10 +45,11 @@ class _HomeViewState extends State<HomeView> {
     _trendingController = TrendingRecipeController(_apiService);
     _eventController = EventController();
 
-    _recipeListController.fetchRecipesByFilter(''); // bisa default kosong
+    _recipeListController.fetchSuggestionsFromApi();
     _trendingController.fetchTrendingRecipes();
     _eventController.fetchEventsFromSpoonacular();
   }
+
 
   @override
   void dispose() {
@@ -74,18 +75,7 @@ class _HomeViewState extends State<HomeView> {
               enableNavigation: true,
               padding: const EdgeInsets.fromLTRB(20, 6, 20, 8),
             ),
-            ValueListenableBuilder<List<dynamic>>(
-              valueListenable: _recipeListController.recipes,
-              builder: (context, recipes, child) {
-                if (recipes.isEmpty) {
-                  return const Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Center(child: CircularProgressIndicator()),
-                  );
-                }
-                return Suggestion(controller: _recipeListController);
-              },
-            ),
+Suggestion(controller: _recipeListController),
             ValueListenableBuilder<List<RecipeModel>>(
               valueListenable: _trendingController.trendingRecipes,
               builder: (context, recipes, child) {

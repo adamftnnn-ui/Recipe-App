@@ -8,7 +8,8 @@ class NutritionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (nutrition.isEmpty) return const SizedBox();
+    if (nutrition.isEmpty) return const SizedBox.shrink();
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(12),

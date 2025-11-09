@@ -8,6 +8,8 @@ class InstructionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (instructions.isEmpty) return const SizedBox.shrink();
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(12),

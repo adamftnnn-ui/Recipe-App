@@ -1,4 +1,3 @@
-// lib/views/components/suggestion.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../controllers/recipe_list_controller.dart';
@@ -15,6 +14,7 @@ class Suggestion extends StatelessWidget {
       valueListenable: controller.suggestions,
       builder: (context, suggestions, _) {
         if (suggestions.isEmpty) return const SizedBox(height: 30);
+
         return Padding(
           padding: const EdgeInsets.fromLTRB(20, 6, 20, 6),
           child: SizedBox(
@@ -29,6 +29,7 @@ class Suggestion extends StatelessWidget {
                 return InkWell(
                   borderRadius: BorderRadius.circular(10),
                   onTap: () {
+                    // Pindah ke RecipeListView dengan keyword dinamis
                     Navigator.push(
                       context,
                       MaterialPageRoute(

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class ChatBubble extends StatelessWidget {
-  final String avatar;
+  final String avatarUrl;
   final String name;
   final String? role;
   final String message;
@@ -12,7 +12,7 @@ class ChatBubble extends StatelessWidget {
 
   const ChatBubble({
     super.key,
-    required this.avatar,
+    required this.avatarUrl,
     required this.name,
     this.role,
     required this.message,
@@ -58,11 +58,11 @@ class ChatBubble extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 16,
-                      backgroundImage: avatar.isNotEmpty
-                          ? AssetImage(avatar)
+                      backgroundImage: avatarUrl.isNotEmpty
+                          ? NetworkImage(avatarUrl)
                           : null,
                       backgroundColor: Colors.grey[500],
-                      child: avatar.isEmpty
+                      child: avatarUrl.isEmpty
                           ? const Icon(
                               HugeIcons.strokeRoundedUser,
                               size: 16,
