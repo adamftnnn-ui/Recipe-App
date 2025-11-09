@@ -5,13 +5,13 @@ import 'package:hugeicons/hugeicons.dart';
 class CategoryModal extends StatelessWidget {
   final String title;
   final List<String> items;
-  final Function(String)? onSelected;
+  final Function(String) onSelected;
 
   const CategoryModal({
     super.key,
     required this.title,
     required this.items,
-    this.onSelected,
+    required this.onSelected,
   });
 
   IconData _getIcon(String title, String item) {
@@ -43,16 +43,7 @@ class CategoryModal extends StatelessWidget {
             return HugeIcons.strokeRoundedPlate;
         }
       case 'Acara':
-        switch (item.toLowerCase()) {
-          case 'ulang tahun':
-            return HugeIcons.strokeRoundedBirthdayCake;
-          case 'ramadhan':
-            return HugeIcons.strokeRoundedMoon;
-          case 'natal':
-            return HugeIcons.strokeRoundedStar;
-          default:
-            return HugeIcons.strokeRoundedCalendar01;
-        }
+        return HugeIcons.strokeRoundedCalendar01;
       default:
         return HugeIcons.strokeRoundedCircle;
     }
@@ -129,7 +120,7 @@ class CategoryModal extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     onTap: () {
                       Navigator.pop(context);
-                      if (onSelected != null) onSelected!(item);
+                      onSelected(item);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(

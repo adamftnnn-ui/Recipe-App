@@ -1,54 +1,20 @@
+// lib/views/components/suggestion.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../controllers/recipe_list_controller.dart';
 import '../views/recipe_list_view.dart';
 
-class Suggestion extends StatefulWidget {
-  final RecipeListController? controller;
+class Suggestion extends StatelessWidget {
+  final RecipeListController controller;
 
-  const Suggestion({super.key, this.controller});
-
-  @override
-  State<Suggestion> createState() => _SuggestionState();
-}
-
-class _SuggestionState extends State<Suggestion> {
-  late final RecipeListController _controller;
-  late final bool _ownsController;
-
-  @override
-  void initState() {
-    super.initState();
-    _ownsController = widget.controller == null;
-    _controller = widget.controller ?? RecipeListController();
-
-    // Hanya fetch jika Suggestion membuat controller sendiri
-    if (_ownsController) {
-      _controller.fetchSuggestionsFromApi();
-    }
-  }
-
-  @override
-  void dispose() {
-    // Hanya dispose controller jika dibuat oleh widget ini
-    if (_ownsController) {
-      try {
-        _controller.suggestions.dispose();
-        _controller.recipes.dispose();
-      } catch (_) {}
-    }
-    super.dispose();
-  }
+  const Suggestion({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<List<String>>(
-      valueListenable: _controller.suggestions,
+      valueListenable: controller.suggestions,
       builder: (context, suggestions, _) {
-        if (suggestions.isEmpty) {
-          return const SizedBox(height: 30);
-        }
-
+        if (suggestions.isEmpty) return const SizedBox(height: 30);
         return Padding(
           padding: const EdgeInsets.fromLTRB(20, 6, 20, 6),
           child: SizedBox(
@@ -66,11 +32,8 @@ class _SuggestionState extends State<Suggestion> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => RecipeListView(
-                          initialKeyword: label,
-                          title: label,
-                          recipes: const [],
-                        ),
+                        builder: (_) =>
+                            RecipeListView(initialKeyword: label, title: label),
                       ),
                     );
                   },

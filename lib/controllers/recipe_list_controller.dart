@@ -1,49 +1,44 @@
+// lib/controllers/recipe_list_controller.dart
 import 'package:flutter/foundation.dart';
 import 'dart:math';
 import '../controllers/api_services.dart';
 
 class RecipeListController {
-  final ValueNotifier<List<String>> suggestions = ValueNotifier<List<String>>(
-    [],
-  );
-  final ValueNotifier<List<dynamic>> recipes = ValueNotifier<List<dynamic>>([]);
+  final ValueNotifier<List<String>> suggestions = ValueNotifier([]);
+  final ValueNotifier<List<dynamic>> recipes = ValueNotifier([]);
 
   Future<void> fetchSuggestionsFromApi() async {
     try {
-      final endpoint = "recipes/random?number=6";
-      final result = await ApiService.getData(endpoint);
+      final result = await ApiService.getData("recipes/random?number=6");
       if (result != null && result.containsKey('recipes')) {
-        final List<dynamic> rawRecipes = result['recipes'] as List<dynamic>;
-        final List<String> newSuggestions = rawRecipes
-            .map((item) {
-              final title = (item['title'] ?? '').toString();
-              final words = title.split(' ');
-              return words.take(2).join(' ');
-            })
+        final List<String> newSuggestions = (result['recipes'] as List)
+            .map(
+              (item) =>
+                  (item['title'] ?? '').toString().split(' ').take(2).join(' '),
+            )
             .where((s) => s.isNotEmpty)
             .toList();
-        suggestions.value = newSuggestions.isEmpty
-            ? ['Nasi Goreng', 'Sop Ayam', 'Ikan Bakar']
-            : newSuggestions;
+        suggestions.value = newSuggestions.isNotEmpty
+            ? newSuggestions
+            : ['Nasi Goreng', 'Sop Ayam', 'Ikan Bakar'];
       } else {
         suggestions.value = ['Nasi Goreng', 'Sop Ayam', 'Ikan Bakar'];
       }
-    } catch (e) {
-      print("Error fetching suggestions: $e");
+    } catch (_) {
       suggestions.value = ['Nasi Goreng', 'Sop Ayam', 'Ikan Bakar'];
     }
   }
 
-  Future<void> fetchRecipesByQuery(String query) async {
+  Future<void> fetchRecipesByFilter(String filter) async {
     recipes.value = [];
     try {
-      final q = Uri.encodeQueryComponent(query);
-      final endpoint =
-          "recipes/complexSearch?query=$q&number=10&addRecipeInformation=true";
-      final result = await ApiService.getData(endpoint);
+      if (filter.isEmpty) return;
+      final q = Uri.encodeQueryComponent(filter);
+      final result = await ApiService.getData(
+        "recipes/complexSearch?query=$q&number=20&addRecipeInformation=true",
+      );
       if (result != null && result.containsKey('results')) {
-        final List<dynamic> rawRecipes = result['results'] as List<dynamic>;
-        final mappedRecipes = rawRecipes.map((item) {
+        final mapped = (result['results'] as List).map((item) {
           final cuisines = item['cuisines'];
           String country = 'Global';
           if (cuisines is List && cuisines.isNotEmpty)
@@ -51,23 +46,20 @@ class RecipeListController {
           final isHalal =
               !(item['vegetarian'] == true || item['vegan'] == true);
           return {
-            'image': item['image'] ?? '',
+            'id': item['id'],
             'title': item['title'] ?? 'Tanpa Judul',
-            'isHalal': isHalal,
+            'image': item['image'] ?? '',
             'country': country,
+            'isHalal': isHalal,
             'readyInMinutes': item['readyInMinutes'] ?? '-',
             'servings': item['servings'] ?? '-',
-            'rating': 4.0 + Random().nextDouble() * 0.9,
-            'id': item['id'],
+            'rating': 4 + Random().nextDouble() * 0.9,
             'original_data': item,
           };
         }).toList();
-        recipes.value = mappedRecipes;
-      } else {
-        recipes.value = [];
+        recipes.value = mapped;
       }
-    } catch (e) {
-      print("Error fetching recipes: $e");
+    } catch (_) {
       recipes.value = [];
     }
   }
