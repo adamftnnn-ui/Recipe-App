@@ -16,7 +16,6 @@ import '../models/recipe_model.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
-
   @override
   State<HomeView> createState() => _HomeViewState();
 }
@@ -26,25 +25,21 @@ class _HomeViewState extends State<HomeView> {
   late final RecipeListController _recipeListController;
   late final TrendingRecipeController _trendingController;
   late final EventController _eventController;
-
   final UserModel _user = UserModel(
     name: 'Adam',
     avatarUrl: 'assets/images/avatar.jpg',
   );
-
   final List<String> _localBanners = const [
     'assets/images/banner1.png',
     'assets/images/banner2.png',
     'assets/images/banner3.png',
   ];
-
   @override
   void initState() {
     super.initState();
     _recipeListController = RecipeListController();
     _trendingController = TrendingRecipeController(_apiService);
     _eventController = EventController();
-
     _recipeListController.fetchSuggestionsFromApi();
     _trendingController.fetchTrendingRecipes();
     _eventController.fetchEventsFromSpoonacular();
