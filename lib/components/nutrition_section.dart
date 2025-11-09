@@ -1,11 +1,10 @@
-// lib/views/components/nutrition_readonly.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class NutritionReadonly extends StatelessWidget {
+class NutritionSection extends StatelessWidget {
   final Map<String, String> nutrition;
 
-  const NutritionReadonly({super.key, required this.nutrition});
+  const NutritionSection({super.key, required this.nutrition});
 
   @override
   Widget build(BuildContext context) {

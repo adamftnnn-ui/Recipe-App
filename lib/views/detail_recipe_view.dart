@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_application_1/components/nutrition_section.dart';
 import 'package:hugeicons/hugeicons.dart';
 import '../controllers/detail_recipe_controller.dart';
 import '../components/header_section.dart';
 import '../components/ingredients_section.dart';
 import '../components/instruction_section.dart';
+import '../components/nutrition_section.dart';
 
 class DetailRecipeView extends StatelessWidget {
   final DetailRecipeController controller;
@@ -37,7 +37,7 @@ class DetailRecipeView extends StatelessWidget {
                           BoxShadow(
                             color: Colors.black.withOpacity(0.04),
                             blurRadius: 6,
-                            offset: const Offset(0, 3),
+                            offset: Offset(0, 3),
                           ),
                         ],
                       ),
@@ -85,7 +85,7 @@ class DetailRecipeView extends StatelessWidget {
                       instructions: controller.getInstructions(),
                     ),
                     const SizedBox(height: 16),
-                    NutritionReadonly(nutrition: controller.getNutrition()),
+                    NutritionSection(nutrition: controller.getNutrition()),
                     const SizedBox(height: 20),
                   ],
                 ),

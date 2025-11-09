@@ -1,15 +1,13 @@
-// HeaderSection.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
-import '../../models/recipe_model.dart';
+import '../models/recipe_model.dart';
 
 class HeaderSection extends StatelessWidget {
   final RecipeModel recipe;
 
   const HeaderSection({super.key, required this.recipe});
 
-  // Placeholder jika tidak ada gambar
   Widget _buildNoImagePlaceholder() {
     return Container(
       width: 100,
@@ -37,7 +35,6 @@ class HeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Bersihkan tanda kutip/spasi di string URL
     final String cleanImage = recipe.image.replaceAll('"', '').trim();
     final bool isNetworkImage = cleanImage.startsWith('http');
 
@@ -50,7 +47,7 @@ class HeaderSection extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.04),
             blurRadius: 12,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),

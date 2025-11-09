@@ -1,97 +1,67 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_application_1/controllers/api_services.dart'; // Ganti dengan path ApiService Anda
-import 'package:flutter_application_1/models/recipe_model.dart'; // Ganti dengan path RecipeModel Anda
 import 'dart:math';
+import '../controllers/api_services.dart';
 
 class RecipeListController {
-  // Properti untuk menyimpan daftar saran pencarian (diubah menjadi ValueNotifier)
   final ValueNotifier<List<String>> suggestions = ValueNotifier<List<String>>(
     [],
   );
-
-  // Properti untuk menyimpan daftar resep hasil pencarian
   final ValueNotifier<List<dynamic>> recipes = ValueNotifier<List<dynamic>>([]);
 
-  // Properti dinamis (non-static)
-  final ApiService apiService;
-
-  RecipeListController(this.apiService);
-
-  // Getter yang mengembalikan nilai dari ValueNotifier
-  List<String> getSuggestions() => suggestions.value;
-
-  // --- 1. Metode untuk Mengambil Saran (Suggestions) dari API ---
   Future<void> fetchSuggestionsFromApi() async {
     try {
-      // Kita gunakan endpoint random untuk mendapatkan resep dan mengambil title sebagai saran.
       final endpoint = "recipes/random?number=6";
-
       final result = await ApiService.getData(endpoint);
-
       if (result != null && result.containsKey('recipes')) {
-        final List<dynamic> rawRecipes = result['recipes'];
-
-        // Ambil judul resep dan gunakan sebagai saran pencarian.
+        final List<dynamic> rawRecipes = result['recipes'] as List<dynamic>;
         final List<String> newSuggestions = rawRecipes
-            .map(
-              (item) => item['title'].toString().split(' ').take(2).join(' '),
-            ) // Ambil 2 kata pertama
+            .map((item) {
+              final title = (item['title'] ?? '').toString();
+              final words = title.split(' ');
+              return words.take(2).join(' ');
+            })
+            .where((s) => s.isNotEmpty)
             .toList();
-
-        // Update ValueNotifier
-        suggestions.value = newSuggestions;
+        suggestions.value = newSuggestions.isEmpty
+            ? ['Nasi Goreng', 'Sop Ayam', 'Ikan Bakar']
+            : newSuggestions;
       } else {
-        // Jika gagal, gunakan saran default (fallback)
-        suggestions.value = const ['Nasi Goreng', 'Sop Ayam', 'Ikan Bakar'];
+        suggestions.value = ['Nasi Goreng', 'Sop Ayam', 'Ikan Bakar'];
       }
     } catch (e) {
       print("Error fetching suggestions: $e");
-      // Fallback
-      suggestions.value = const ['Nasi Goreng', 'Sop Ayam', 'Ikan Bakar'];
+      suggestions.value = ['Nasi Goreng', 'Sop Ayam', 'Ikan Bakar'];
     }
   }
 
-  // --- 2. Metode untuk Mengambil Daftar Resep dari API ---
   Future<void> fetchRecipesByQuery(String query) async {
-    // Reset status loading atau error jika ada
     recipes.value = [];
-
     try {
+      final q = Uri.encodeQueryComponent(query);
       final endpoint =
-          "recipes/complexSearch?query=$query&number=10&addRecipeInformation=true";
-      // Tambahkan addRecipeInformation=true agar data lebih lengkap
-
+          "recipes/complexSearch?query=$q&number=10&addRecipeInformation=true";
       final result = await ApiService.getData(endpoint);
-
       if (result != null && result.containsKey('results')) {
-        final List<dynamic> rawRecipes = result['results'];
-
+        final List<dynamic> rawRecipes = result['results'] as List<dynamic>;
         final mappedRecipes = rawRecipes.map((item) {
-          // Data resep dari complexSearch + addRecipeInformation=true
+          final cuisines = item['cuisines'];
+          String country = 'Global';
+          if (cuisines is List && cuisines.isNotEmpty)
+            country = cuisines[0].toString();
+          final isHalal =
+              !(item['vegetarian'] == true || item['vegan'] == true);
           return {
             'image': item['image'] ?? '',
             'title': item['title'] ?? 'Tanpa Judul',
-
-            // Mengambil/mengolah properti yang diperlukan RecipeCard
-            'isHalal':
-                item['vegetarian'] == false &&
-                item['vegan'] ==
-                    false, // Contoh logika sederhana isHalal/Non-Veg
-            'country': item['cuisines'] != null && item['cuisines'].isNotEmpty
-                ? item['cuisines'][0]
-                : 'Global',
-            'readyInMinutes': item['readyInMinutes'] ?? 30,
-            'servings': item['servings'] ?? 4,
-            // Spoonacular tidak menyediakan field 'rating', kita simulasikan
-            'rating':
-                4.0 +
-                Random().nextDouble() * 0.9, // Rating acak antara 4.0 dan 4.9
-
+            'isHalal': isHalal,
+            'country': country,
+            'readyInMinutes': item['readyInMinutes'] ?? '-',
+            'servings': item['servings'] ?? '-',
+            'rating': 4.0 + Random().nextDouble() * 0.9,
             'id': item['id'],
-            'original_data': item, // Simpan data asli untuk DetailController
+            'original_data': item,
           };
         }).toList();
-
         recipes.value = mappedRecipes;
       } else {
         recipes.value = [];

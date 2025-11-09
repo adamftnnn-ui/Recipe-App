@@ -43,7 +43,7 @@ class IngredientsSection extends StatelessWidget {
                     BoxShadow(
                       color: Colors.black.withOpacity(0.04),
                       blurRadius: 4,
-                      offset: const Offset(0, 2),
+                      offset: Offset(0, 2),
                     ),
                   ],
                 ),

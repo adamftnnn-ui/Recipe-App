@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_application_1/views/detail_recipe_view.dart';
-
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:hugeicons/hugeicons.dart';
-
+import '../views/detail_recipe_view.dart';
 import '../controllers/detail_recipe_controller.dart';
 
 class RecipeCard extends StatelessWidget {
-  // Semua properti sekarang adalah final, datanya sudah diolah sebelum dimasukkan
-  final dynamic
-  recipe; // Tetap dynamic untuk diteruskan ke DetailRecipeController
+  final dynamic recipe;
   final String image;
   final String title;
   final bool isHalal;
@@ -20,7 +14,6 @@ class RecipeCard extends StatelessWidget {
   final String servings;
   final double rating;
 
-  // Constructor menerima semua data yang diperlukan
   const RecipeCard({
     super.key,
     required this.recipe,
@@ -33,10 +26,6 @@ class RecipeCard extends StatelessWidget {
     required this.rating,
   });
 
-  // Catatan: Logika pengambilan data dari 'recipe' (Map atau Model)
-  // yang sebelumnya ada di getter (misalnya, _isMap ? recipe['title'] : recipe.title)
-  // HARUS dipindahkan ke parent widget yang memanggil RecipeCard ini.
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -44,10 +33,11 @@ class RecipeCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => DetailRecipeView(
-              // recipe dynamic tetap diteruskan untuk DetailRecipeController
-              controller: DetailRecipeController(recipe: recipe),
-            ),
+            builder: (_) {
+              return DetailRecipeView(
+                controller: DetailRecipeController(recipeData: recipe),
+              );
+            },
           ),
         );
       },
@@ -60,7 +50,7 @@ class RecipeCard extends StatelessWidget {
             BoxShadow(
               color: Colors.black.withOpacity(0.04),
               blurRadius: 12,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
           ],
         ),
@@ -69,7 +59,7 @@ class RecipeCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(18),
                 topRight: Radius.circular(18),
               ),
@@ -111,7 +101,7 @@ class RecipeCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          title, // Menggunakan field final
+                          title,
                           style: GoogleFonts.poppins(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -120,7 +110,7 @@ class RecipeCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      if (isHalal) // Menggunakan field final
+                      if (isHalal)
                         Container(
                           height: 18,
                           width: 18,
@@ -139,7 +129,7 @@ class RecipeCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    country, // Menggunakan field final
+                    country,
                     style: GoogleFonts.poppins(
                       fontSize: 11,
                       color: Colors.grey[500],
@@ -155,15 +145,12 @@ class RecipeCard extends StatelessWidget {
                           InfoItem(
                             HugeIcons.strokeRoundedClock01,
                             readyInMinutes,
-                          ), // Menggunakan field final
+                          ),
                           const SizedBox(width: 6),
-                          InfoItem(
-                            HugeIcons.strokeRoundedRiceBowl01,
-                            servings,
-                          ), // Menggunakan field final
+                          InfoItem(HugeIcons.strokeRoundedRiceBowl01, servings),
                         ],
                       ),
-                      RatingStars(rating), // Menggunakan field final
+                      RatingStars(rating),
                     ],
                   ),
                 ],
@@ -176,7 +163,6 @@ class RecipeCard extends StatelessWidget {
   }
 }
 
-// Class InfoItem dan RatingStars tidak ada perubahan karena sudah dinamis
 class InfoItem extends StatelessWidget {
   final IconData icon;
   final String text;

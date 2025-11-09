@@ -6,9 +6,6 @@ import '../components/search_bar.dart';
 import '../controllers/api_services.dart';
 import 'recipe_list_view.dart';
 
-// Asumsi: SearchBarrController.getHistory() mengembalikan List<dynamic> (atau List<SearchHistoryItem> jika Anda memiliki modelnya)
-// Asumsi: item dalam history memiliki properti 'keyword'
-
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
 
@@ -21,8 +18,6 @@ class _SearchViewState extends State<SearchView> {
   final FocusNode _focusNode = FocusNode();
   final SearchBarrController _controller = SearchBarrController();
   bool _isLoading = false;
-
-  // ✅ Bagian DYNAMIC: Simpan riwayat di dalam state
   List<dynamic> _history = [];
 
   @override
@@ -31,7 +26,6 @@ class _SearchViewState extends State<SearchView> {
     _loadHistory();
   }
 
-  /// 🔄 Memuat riwayat pencarian ke dalam state
   Future<void> _loadHistory() async {
     final loadedHistory = _controller.getHistory();
     setState(() {
@@ -39,13 +33,11 @@ class _SearchViewState extends State<SearchView> {
     });
   }
 
-  /// 🚫 Menghapus riwayat dan memuat ulang state
   void _handleClearHistory() {
     _controller.clearHistory();
     _loadHistory();
   }
 
-  /// ✅ Fungsi utama untuk handle pencarian (dijalankan ketika user tekan Enter)
   Future<void> _handleSearch(String value) async {
     final keyword = value.trim();
     if (keyword.isEmpty) return;
@@ -54,32 +46,20 @@ class _SearchViewState extends State<SearchView> {
     setState(() => _isLoading = true);
 
     try {
-      // 🎯 PERUBAHAN UTAMA: Mengganti ke endpoint complexSearch
-      // Parameter: query=KEYWORD, number=10, fillIngredients, dll.
-      // Saya menyederhanakan URL menjadi yang paling esensial (query dan number)
-      // agar lebih fleksibel untuk semua pencarian, kecuali ada kebutuhan spesifik lainnya.
-
       final endpoint =
           'recipes/complexSearch?query=${Uri.encodeComponent(keyword)}&number=10&addRecipeInformation=true&addRecipeInstructions=true';
       final response = await ApiService.getData(endpoint);
 
-      // 🔹 Simpan keyword yang berhasil dicari ke riwayat (DYNAMIC)
       _controller.addHistory(keyword);
 
-      // Endpoint complexSearch mengembalikan 'results', bukan 'recipes'
       if (response != null && response['results'] != null) {
-        final List<dynamic> recipes = response['results'];
-
-        // 🔹 Navigasi ke halaman hasil (RecipeListView)
+        final List<dynamic> recipes = response['results'] as List<dynamic>;
         if (mounted) {
-          // Muat ulang riwayat setelah berhasil (DYNAMIC)
           _loadHistory();
-
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  // Pastikan RecipeListView menerima List<dynamic> recipes
                   RecipeListView(initialKeyword: keyword, recipes: recipes),
             ),
           );
@@ -122,12 +102,10 @@ class _SearchViewState extends State<SearchView> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 🔹 Header atas (TETAP SAMA)
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 14, 20, 8),
               child: Row(
                 children: [
-                  // ... (Bagian tombol kembali, tidak diubah)
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: Container(
@@ -140,7 +118,7 @@ class _SearchViewState extends State<SearchView> {
                           BoxShadow(
                             color: Colors.black.withOpacity(0.04),
                             blurRadius: 6,
-                            offset: const Offset(0, 3),
+                            offset: Offset(0, 3),
                           ),
                         ],
                       ),
@@ -169,8 +147,6 @@ class _SearchViewState extends State<SearchView> {
                 ],
               ),
             ),
-
-            // 🔹 Search bar input aktif (TETAP SAMA)
             SearchBarr(
               controller: _searchController,
               enableNavigation: false,
@@ -178,8 +154,6 @@ class _SearchViewState extends State<SearchView> {
               padding: const EdgeInsets.fromLTRB(20, 6, 20, 8),
               placeholder: 'Cari resep atau bahan',
             ),
-
-            // 🔹 Indikator loading saat fetching data (TETAP SAMA)
             if (_isLoading)
               LinearProgressIndicator(
                 minHeight: 2,
@@ -190,8 +164,6 @@ class _SearchViewState extends State<SearchView> {
                   Theme.of(context).primaryColor,
                 ),
               ),
-
-            // 🔹 History pencarian (TETAP SAMA - DYNAMIC)
             Expanded(
               child: history.isEmpty
                   ? Center(
@@ -221,9 +193,7 @@ class _SearchViewState extends State<SearchView> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {
-                                  // Navigasi Lihat Semua
-                                },
+                                onTap: () {},
                                 child: Text(
                                   'Lihat Semua',
                                   style: GoogleFonts.poppins(
@@ -236,14 +206,9 @@ class _SearchViewState extends State<SearchView> {
                             ],
                           ),
                           const SizedBox(height: 12),
-
-                          // ✅ DYNAMIC: Mapping riwayat
                           ...history.map((item) {
                             final isLast = item == history.last;
-                            // Asumsi item adalah objek yang memiliki properti 'keyword'
-                            // Jika 'item' adalah Map, gunakan item['keyword']
-                            final keyword = item.keyword ?? 'Keyword Tidak Ada';
-
+                            final keyword = item.keyword;
                             return Column(
                               children: [
                                 InkWell(
@@ -289,7 +254,6 @@ class _SearchViewState extends State<SearchView> {
                               ],
                             );
                           }).toList(),
-
                           const SizedBox(height: 20),
                           Center(
                             child: GestureDetector(

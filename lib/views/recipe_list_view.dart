@@ -4,7 +4,6 @@ import 'package:hugeicons/hugeicons.dart';
 import '../components/card.dart';
 import '../components/search_bar.dart';
 import '../controllers/recipe_list_controller.dart';
-import '../controllers/api_services.dart';
 
 class RecipeListView extends StatefulWidget {
   final String initialKeyword;
@@ -32,8 +31,7 @@ class _RecipeListViewState extends State<RecipeListView>
   @override
   void initState() {
     super.initState();
-
-    controller = RecipeListController(ApiService());
+    controller = RecipeListController();
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 450),
@@ -44,8 +42,6 @@ class _RecipeListViewState extends State<RecipeListView>
     );
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // Jika caller menyediakan daftar resep (mis. dari SearchView atau Trending),
-      // gunakan data tersebut dan hindari pemanggilan API ulang.
       if (widget.recipes != null && widget.recipes!.isNotEmpty) {
         controller.recipes.value = widget.recipes!;
         _animationController.forward();
@@ -76,7 +72,6 @@ class _RecipeListViewState extends State<RecipeListView>
         backgroundColor: theme.scaffoldBackgroundColor,
         body: Column(
           children: [
-            // --- Header Kembali ---
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 14, 20, 8),
               child: Row(
@@ -93,7 +88,7 @@ class _RecipeListViewState extends State<RecipeListView>
                           BoxShadow(
                             color: Colors.black.withOpacity(0.04),
                             blurRadius: 6,
-                            offset: const Offset(0, 3),
+                            offset: Offset(0, 3),
                           ),
                         ],
                       ),
@@ -122,26 +117,20 @@ class _RecipeListViewState extends State<RecipeListView>
                 ],
               ),
             ),
-
-            // --- Search Bar ---
             SearchBarr(
               initialValue: widget.initialKeyword,
               enableNavigation: true,
               padding: const EdgeInsets.fromLTRB(20, 6, 20, 8),
             ),
-
             const SizedBox(height: 8),
-
-            // --- Daftar Resep / Loading / Empty ---
             Expanded(
               child: FadeTransition(
                 opacity: _fadeIn,
                 child: ValueListenableBuilder<List<dynamic>>(
                   valueListenable: controller.recipes,
                   builder: (context, recipes, _) {
-                    if (isLoading) {
+                    if (isLoading)
                       return const Center(child: CircularProgressIndicator());
-                    }
 
                     if (recipes.isEmpty) {
                       return Center(
