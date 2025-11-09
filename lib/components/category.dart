@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:hugeicons/hugeicons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hugeicons/hugeicons.dart';
 import '../../controllers/category_controller.dart';
-
-final categoryData = {
-  'Halal': ['Halal', 'Non-Halal'],
-  'Diet': ['Vegetarian', 'Vegan', 'Keto'],
-  'Hidangan': ['Utama', 'Pembuka', 'Penutup'],
-  'Acara': ['Ulang Tahun', 'Ramadhan', 'Natal'],
-  'Negara': ['Indonesia', 'Malaysia', 'Thailand', 'Vietnam', 'Jepang'],
-};
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({super.key});
 
+  IconData _getIcon(String title) {
+    switch (title) {
+      case 'Halal':
+        return HugeIcons.strokeRoundedHalal;
+      case 'Diet':
+        return HugeIcons.strokeRoundedHealth;
+      case 'Hidangan':
+        return HugeIcons.strokeRoundedPlate;
+      case 'Acara':
+        return HugeIcons.strokeRoundedSpoonAndFork;
+      case 'Negara':
+        return HugeIcons.strokeRoundedEarth;
+      default:
+        return HugeIcons.strokeRoundedCircle;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final categories = [
-      {'icon': HugeIcons.strokeRoundedHalal, 'label': 'Halal'},
-      {'icon': HugeIcons.strokeRoundedHealth, 'label': 'Diet'},
-      {'icon': HugeIcons.strokeRoundedPlate, 'label': 'Hidangan'},
-      {'icon': HugeIcons.strokeRoundedSpoonAndFork, 'label': 'Acara'},
-      {'icon': HugeIcons.strokeRoundedEarth, 'label': 'Negara'},
-    ];
+    final categories = ['Halal', 'Diet', 'Hidangan', 'Acara', 'Negara'];
 
     return Padding(
       padding: const EdgeInsets.only(top: 16, bottom: 10),
@@ -33,17 +36,10 @@ class CategoryWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: categories.map((item) {
-                final label = item['label'] as String;
-
+              children: categories.map((label) {
                 return GestureDetector(
                   onTap: () {
-                    CategoryController.showCategoryModal(
-                      context,
-                      title: label,
-                      items: categoryData[label]!,
-                      onSelected: (value) {},
-                    );
+                    CategoryController.showCategoryModal(context, title: label);
                   },
                   child: Column(
                     children: [
@@ -62,7 +58,7 @@ class CategoryWidget extends StatelessWidget {
                           ],
                         ),
                         child: Icon(
-                          item['icon'] as IconData,
+                          _getIcon(label),
                           color: Colors.green[50],
                           size: 24,
                         ),
