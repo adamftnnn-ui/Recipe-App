@@ -13,6 +13,8 @@ class RecipeCard extends StatelessWidget {
   final String readyInMinutes;
   final String servings;
   final double rating;
+  final bool showDelete;
+  final VoidCallback? onDelete;
 
   const RecipeCard({
     super.key,
@@ -24,6 +26,8 @@ class RecipeCard extends StatelessWidget {
     required this.readyInMinutes,
     required this.servings,
     required this.rating,
+    this.showDelete = false,
+    this.onDelete,
   });
 
   @override
@@ -58,39 +62,64 @@ class RecipeCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(18),
-                topRight: Radius.circular(18),
-              ),
-              child: image.isNotEmpty
-                  ? (image.startsWith('http')
-                        ? Image.network(
-                            image,
-                            height: 110,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.asset(
-                            image,
-                            height: 110,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ))
-                  : Container(
-                      height: 110,
-                      width: double.infinity,
-                      color: Colors.grey[50],
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Belum ada gambar",
-                        style: GoogleFonts.poppins(
-                          fontSize: 11,
-                          color: Colors.grey[500],
-                          fontWeight: FontWeight.w500,
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(18),
+                    topRight: Radius.circular(18),
+                  ),
+                  child: image.isNotEmpty
+                      ? (image.startsWith('http')
+                            ? Image.network(
+                                image,
+                                height: 110,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(
+                                image,
+                                height: 110,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              ))
+                      : Container(
+                          height: 110,
+                          width: double.infinity,
+                          color: Colors.grey[50],
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Belum ada gambar",
+                            style: GoogleFonts.poppins(
+                              fontSize: 11,
+                              color: Colors.grey[500],
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                ),
+                if (showDelete)
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: GestureDetector(
+                      onTap: onDelete,
+                      child: Container(
+                        height: 24,
+                        width: 24,
+                        decoration: BoxDecoration(
+                          color: Colors.red[100],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Icon(
+                          HugeIcons.strokeRoundedDelete01,
+                          color: Colors.red[600],
+                          size: 14,
                         ),
                       ),
                     ),
+                  ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),

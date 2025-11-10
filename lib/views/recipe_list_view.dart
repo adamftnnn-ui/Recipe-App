@@ -47,12 +47,17 @@ class _RecipeListViewState extends State<RecipeListView>
         _animationController.forward();
         setState(() => isLoading = false);
       } else {
-        await controller.fetchRecipesByFilter(
-          widget.initialKeyword,
-        );
+        await controller.fetchRecipesByFilter(widget.initialKeyword);
         _animationController.forward();
         setState(() => isLoading = false);
       }
+    });
+  }
+
+  void _deleteRecipe(int index) {
+    setState(() {
+      controller.recipes.value.removeAt(index);
+      controller.recipes.notifyListeners();
     });
   }
 
@@ -90,7 +95,7 @@ class _RecipeListViewState extends State<RecipeListView>
                           BoxShadow(
                             color: Colors.black.withOpacity(0.04),
                             blurRadius: 6,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -170,7 +175,8 @@ class _RecipeListViewState extends State<RecipeListView>
                         child: Wrap(
                           spacing: spacing,
                           runSpacing: spacing,
-                          children: recipes.map((recipe) {
+                          children: List.generate(recipes.length, (index) {
+                            final recipe = recipes[index];
                             return SizedBox(
                               width: infoCardWidth,
                               child: RecipeCard(
@@ -183,9 +189,11 @@ class _RecipeListViewState extends State<RecipeListView>
                                     '${recipe['readyInMinutes'] ?? '-'}',
                                 servings: '${recipe['servings'] ?? '-'}',
                                 rating: (recipe['rating'] ?? 4.5).toDouble(),
+                                showDelete: true,
+                                onDelete: () => _deleteRecipe(index),
                               ),
                             );
-                          }).toList(),
+                          }),
                         ),
                       ),
                     );

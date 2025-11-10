@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 import '../controllers/profile_controller.dart';
+import 'recipe_list_view.dart';
 
 class ProfileView extends StatelessWidget {
   final ProfileController controller;
@@ -9,232 +10,254 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = controller.user;
-
     return Scaffold(
       backgroundColor: Colors.grey[50],
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Text(
-                  'Profil',
-                  style: GoogleFonts.poppins(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
+          child: ValueListenableBuilder<Map<String, dynamic>>(
+            valueListenable: controller.userNotifier,
+            builder: (context, user, _) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      'Profil',
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.grey[50],
-                  borderRadius: BorderRadius.circular(18),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.04),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
+                  // PROFILE CARD
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[50],
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.04),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // FOTO
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(14),
-                      child: (user['avatarUrl'] as String?)?.isNotEmpty == true
-                          ? Image.asset(
-                              user['avatarUrl'],
-                              width: 80,
-                              height: 80,
-                              fit: BoxFit.cover,
-                            )
-                          : Container(
-                              width: 80,
-                              height: 80,
-                              color: Colors.grey[50],
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Tidak ada gambar',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 11,
-                                  color: Colors.grey[500],
-                                ),
-                              ),
-                            ),
-                    ),
-                    const SizedBox(width: 12),
-
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    user['name'] ?? '-',
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(14),
+                          child:
+                              (user['avatarUrl'] as String?)?.isNotEmpty == true
+                              ? Image.asset(
+                                  user['avatarUrl'],
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                )
+                              : Container(
+                                  width: 80,
+                                  height: 80,
+                                  color: Colors.grey[50],
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'Tidak ada gambar',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
+                                      fontSize: 11,
+                                      color: Colors.grey[500],
                                     ),
                                   ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    user['country'] ?? '-',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: Colors.grey[500],
+                                ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        user['name'] ?? '-',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        user['country'] ?? '-',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          color: Colors.grey[500],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  Container(
+                                    height: 20,
+                                    width: 20,
+                                    decoration: BoxDecoration(
+                                      color: Colors.green[50],
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        HugeIcons.strokeRoundedEdit01,
+                                        color: Colors.green[500],
+                                        size: 14,
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                              const Spacer(),
-                              Container(
-                                height: 20,
-                                width: 20,
-                                decoration: BoxDecoration(
-                                  color: Colors.green[50],
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    HugeIcons.strokeRoundedEdit01,
-                                    color: Colors.green[500],
-                                    size: 14,
+                              const SizedBox(height: 8),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        HugeIcons.strokeRoundedMan,
+                                        size: 14,
+                                        color: Colors.grey[500],
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        user['gender'] ?? '-',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          color: Colors.grey[500],
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
+                                  const SizedBox(width: 12),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        HugeIcons.strokeRoundedUploadCircle01,
+                                        size: 14,
+                                        color: Colors.grey[500],
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        '${controller.userRecipes.value.length} Posting',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          color: Colors.grey[500],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  Icon(
+                                    HugeIcons.strokeRoundedShare01,
+                                    size: 16,
+                                    color: Colors.grey[500],
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                          const SizedBox(height: 8),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    HugeIcons.strokeRoundedMan,
-                                    size: 14,
-                                    color: Colors.grey[500],
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    user['gender'] ?? '-',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: Colors.grey[500],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(width: 12),
-                              Row(
-                                children: [
-                                  Icon(
-                                    HugeIcons.strokeRoundedUploadCircle01,
-                                    size: 14,
-                                    color: Colors.grey[500],
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    '${user['uploads'] ?? 0} Posting',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: Colors.grey[500],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Spacer(),
-                              Icon(
-                                HugeIcons.strokeRoundedShare01,
-                                size: 16,
-                                color: Colors.grey[500],
-                              ),
-                            ],
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+                  _buildSectionTitle('Personalisasi'),
+                  const SizedBox(height: 8),
+                  _buildMenuCard(context, [
+                    {
+                      'icon': HugeIcons.strokeRoundedRiceBowl01,
+                      'title': 'Resepku',
+                      'onTap': () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => RecipeListView(
+                              initialKeyword: '',
+                              title: 'Daftar Resepku',
+                              recipes: controller.userRecipes.value,
+                            ),
+                          ),
+                        );
+                      },
+                    },
+                    {
+                      'icon': HugeIcons.strokeRoundedBookmark01,
+                      'title': 'Simpanan',
+                    },
+                    {'icon': HugeIcons.strokeRoundedStar, 'title': 'Penilaian'},
+                  ]),
+
+                  const SizedBox(height: 20),
+                  _buildSectionTitle('Pengaturan'),
+                  const SizedBox(height: 8),
+                  _buildMenuCard(context, [
+                    {'icon': HugeIcons.strokeRoundedProfile, 'title': 'Akun'},
+                    {'icon': HugeIcons.strokeRoundedEarth, 'title': 'Bahasa'},
+                    {
+                      'icon': HugeIcons.strokeRoundedNotification01,
+                      'title': 'Notifikasi',
+                    },
+                    {
+                      'icon': HugeIcons.strokeRoundedMoon01,
+                      'title': 'Mode Gelap',
+                    },
+                  ]),
+
+                  const SizedBox(height: 20),
+                  _buildSectionTitle('Bantuan'),
+                  const SizedBox(height: 8),
+                  _buildMenuCard(context, [
+                    {
+                      'icon': HugeIcons.strokeRoundedHelpCircle,
+                      'title': 'Pusat Bantuan',
+                    },
+                  ]),
+
+                  const SizedBox(height: 20),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Column(
+                        children: [
+                          Icon(
+                            HugeIcons.strokeRoundedLogout01,
+                            size: 24,
+                            color: Colors.red[500],
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Keluar',
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.red[500],
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 20),
-              _buildSectionTitle('Personalisasi'),
-              const SizedBox(height: 8),
-              _buildMenuCard([
-                {'icon': HugeIcons.strokeRoundedRiceBowl01, 'title': 'Resepku'},
-                {
-                  'icon': HugeIcons.strokeRoundedBookmark01,
-                  'title': 'Simpanan',
-                },
-                {'icon': HugeIcons.strokeRoundedStar, 'title': 'Penilaian'},
-              ]),
-
-              const SizedBox(height: 20),
-              _buildSectionTitle('Pengaturan'),
-              const SizedBox(height: 8),
-              _buildMenuCard([
-                {'icon': HugeIcons.strokeRoundedProfile, 'title': 'Akun'},
-                {'icon': HugeIcons.strokeRoundedEarth, 'title': 'Bahasa'},
-                {
-                  'icon': HugeIcons.strokeRoundedNotification01,
-                  'title': 'Notifikasi',
-                },
-                {'icon': HugeIcons.strokeRoundedMoon01, 'title': 'Mode Gelap'},
-              ]),
-
-              const SizedBox(height: 20),
-              _buildSectionTitle('Bantuan'),
-              const SizedBox(height: 8),
-              _buildMenuCard([
-                {
-                  'icon': HugeIcons.strokeRoundedHelpCircle,
-                  'title': 'Pusat Bantuan',
-                },
-              ]),
-
-              const SizedBox(height: 20),
-              Center(
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Column(
-                    children: [
-                      Icon(
-                        HugeIcons.strokeRoundedLogout01,
-                        size: 24,
-                        color: Colors.red[500],
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Keluar',
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.red[500],
-                        ),
-                      ),
-                    ],
                   ),
-                ),
-              ),
-              const SizedBox(height: 20),
-            ],
+                  const SizedBox(height: 20),
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -252,7 +275,10 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuCard(List<Map<String, dynamic>> items) {
+  Widget _buildMenuCard(
+    BuildContext context,
+    List<Map<String, dynamic>> items,
+  ) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -286,7 +312,7 @@ class ProfileView extends StatelessWidget {
                   size: 16,
                   color: Colors.grey[700],
                 ),
-                onTap: () {},
+                onTap: item['onTap'] ?? () {},
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12),
               ),
               if (index != items.length - 1)

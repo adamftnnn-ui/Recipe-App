@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../controllers/create_recipe_controller.dart';
+import '../controllers/profile_controller.dart';
 import '../components/multi_line_editable.dart';
 import '../components/nutrition_editable.dart';
 import '../components/header_editable.dart';
 
 class CreateRecipeView extends StatefulWidget {
   final CreateRecipeController controller;
+  final ProfileController profileController;
 
-  const CreateRecipeView({super.key, required this.controller});
+  const CreateRecipeView({
+    super.key,
+    required this.controller,
+    required this.profileController,
+  });
 
   @override
   State<CreateRecipeView> createState() => _CreateRecipeViewState();
@@ -26,6 +32,39 @@ class _CreateRecipeViewState extends State<CreateRecipeView> {
   final List<String> _ingredients = [];
   final List<String> _steps = [];
   final List<Map<String, String>> _nutritions = [];
+
+  void _postRecipe() {
+    final recipe = {
+      'title': widget.controller.title,
+      'country': widget.controller.country,
+      'isHalal': widget.controller.isHalal,
+      'readyInMinutes': widget.controller.time,
+      'servings': widget.controller.serving,
+      'ingredients': widget.controller.ingredients,
+      'steps': widget.controller.steps,
+      'nutritions': widget.controller.nutritions,
+      'image': _selectedImage ?? '',
+    };
+
+    widget.profileController.addRecipe(recipe);
+
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('Resep berhasil diposting!')));
+
+    widget.controller.clearAll();
+    setState(() {
+      _titleC.clear();
+      _timeC.clear();
+      _servingC.clear();
+      _selectedCountry = null;
+      _isHalal = false;
+      _ingredients.clear();
+      _steps.clear();
+      _nutritions.clear();
+      _selectedImage = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +141,13 @@ class _CreateRecipeViewState extends State<CreateRecipeView> {
                   setState(() => _nutritions.removeAt(index));
                   widget.controller.setNutritions(_nutritions);
                 },
+              ),
+              const SizedBox(height: 20),
+              Center(
+                child: ElevatedButton(
+                  onPressed: _postRecipe,
+                  child: const Text('Posting Resep'),
+                ),
               ),
             ],
           ),

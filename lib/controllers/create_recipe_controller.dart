@@ -8,37 +8,14 @@ class CreateRecipeController {
   List<String> steps = [];
   List<Map<String, String>> nutritions = [];
 
-  void setTitle(String value) {
-    title = value;
-  }
-
-  void setCountry(String value) {
-    country = value;
-  }
-
-  void setHalal(bool value) {
-    isHalal = value;
-  }
-
-  void setTime(String value) {
-    time = value;
-  }
-
-  void setServing(String value) {
-    serving = value;
-  }
-
-  void setIngredients(List<String> value) {
-    ingredients = value;
-  }
-
-  void setSteps(List<String> value) {
-    steps = value;
-  }
-
-  void setNutritions(List<Map<String, String>> value) {
-    nutritions = value;
-  }
+  void setTitle(String value) => title = value;
+  void setCountry(String value) => country = value;
+  void setHalal(bool value) => isHalal = value;
+  void setTime(String value) => time = value;
+  void setServing(String value) => serving = value;
+  void setIngredients(List<String> value) => ingredients = value;
+  void setSteps(List<String> value) => steps = value;
+  void setNutritions(List<Map<String, String>> value) => nutritions = value;
 
   void removeIngredientAt(int index) {
     if (index >= 0 && index < ingredients.length) ingredients.removeAt(index);

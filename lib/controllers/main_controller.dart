@@ -19,9 +19,12 @@ class _MainControllerState extends State<MainController> {
   final createController = CreateRecipeController();
   final profileController = ProfileController();
 
-  late final List<Widget> _pages = [
+late final List<Widget> _pages = [
     const HomeView(),
-    CreateRecipeView(controller: createController),
+    CreateRecipeView(
+      controller: createController,
+      profileController: profileController,
+    ),
     const ChatView(),
     ProfileView(controller: profileController),
   ];
