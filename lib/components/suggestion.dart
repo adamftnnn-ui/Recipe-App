@@ -34,7 +34,7 @@ class Suggestion extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (_) =>
-                            RecipeListView(initialKeyword: label, title: label),
+                            RecipeListView(initialKeyword: label),
                       ),
                     );
                   },
