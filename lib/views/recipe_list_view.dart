@@ -9,12 +9,14 @@ class RecipeListView extends StatefulWidget {
   final String initialKeyword;
   final String title;
   final List<dynamic>? recipes;
+  final bool showDelete;
 
   const RecipeListView({
     super.key,
     required this.initialKeyword,
     this.title = 'Daftar Resep',
     this.recipes,
+    this.showDelete = false,
   });
 
   @override
@@ -189,7 +191,7 @@ class _RecipeListViewState extends State<RecipeListView>
                                     '${recipe['readyInMinutes'] ?? '-'}',
                                 servings: '${recipe['servings'] ?? '-'}',
                                 rating: (recipe['rating'] ?? 4.5).toDouble(),
-                                showDelete: true,
+                                showDelete: widget.showDelete, // disesuaikan
                                 onDelete: () => _deleteRecipe(index),
                               ),
                             );

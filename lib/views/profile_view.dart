@@ -192,7 +192,9 @@ class ProfileView extends StatelessWidget {
                               initialKeyword: '',
                               title: 'Daftar Resepku',
                               recipes: controller.userRecipes.value,
+                              showDelete: true, // badge muncul
                             ),
+
                           ),
                         );
                       },
