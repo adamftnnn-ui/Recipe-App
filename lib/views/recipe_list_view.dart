@@ -4,12 +4,16 @@ import 'package:hugeicons/hugeicons.dart';
 import '../components/card.dart';
 import '../components/search_bar.dart';
 import '../controllers/recipe_list_controller.dart';
+import '../controllers/profile_controller.dart';
+import 'create_recipe_view.dart';
+import '../controllers/create_recipe_controller.dart';
 
 class RecipeListView extends StatefulWidget {
   final String initialKeyword;
   final String title;
   final List<dynamic>? recipes;
   final bool showDelete;
+  final ProfileController? profileController;
 
   const RecipeListView({
     super.key,
@@ -17,6 +21,7 @@ class RecipeListView extends StatefulWidget {
     this.title = 'Daftar Resep',
     this.recipes,
     this.showDelete = false,
+    this.profileController,
   });
 
   @override
@@ -57,10 +62,41 @@ class _RecipeListViewState extends State<RecipeListView>
   }
 
   void _deleteRecipe(int index) {
-    setState(() {
-      controller.recipes.value.removeAt(index);
-      controller.recipes.notifyListeners();
-    });
+    if (widget.showDelete && widget.profileController != null) {
+      widget.profileController!.removeRecipeAt(index);
+      setState(() {});
+    }
+  }
+
+  void _editRecipe(int index) {
+    if (widget.profileController == null) return;
+    final recipe = controller.recipes.value[index];
+    final createController = CreateRecipeController();
+
+    createController.setTitle(recipe['title'] ?? '');
+    createController.setCountry(recipe['country'] ?? '');
+    createController.setHalal(recipe['isHalal'] ?? false);
+    createController.setTime(recipe['readyInMinutes']?.toString() ?? '');
+    createController.setServing(recipe['servings']?.toString() ?? '');
+    createController.setIngredients(
+      List<String>.from(recipe['ingredients'] ?? []),
+    );
+    createController.setSteps(List<String>.from(recipe['steps'] ?? []));
+    createController.setNutritions(
+      List<Map<String, String>>.from(recipe['nutritions'] ?? []),
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CreateRecipeView(
+          controller: createController,
+          profileController: widget.profileController!,
+          isEditMode: true,
+          editIndex: index,
+        ),
+      ),
+    ).then((_) => setState(() {}));
   }
 
   @override
@@ -191,8 +227,10 @@ class _RecipeListViewState extends State<RecipeListView>
                                     '${recipe['readyInMinutes'] ?? '-'}',
                                 servings: '${recipe['servings'] ?? '-'}',
                                 rating: (recipe['rating'] ?? 4.5).toDouble(),
-                                showDelete: widget.showDelete, // disesuaikan
+                                showDelete: widget.showDelete,
                                 onDelete: () => _deleteRecipe(index),
+                                showEdit: widget.showDelete,
+                                onEdit: () => _editRecipe(index),
                               ),
                             );
                           }),

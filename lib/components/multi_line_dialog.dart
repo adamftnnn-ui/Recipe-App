@@ -61,8 +61,7 @@ class MultiLineDialog extends StatelessWidget {
                 TextButton(
                   onPressed: () => Navigator.pop(context),
                   style: TextButton.styleFrom(
-                    foregroundColor:
-                        Colors.grey[500],
+                    foregroundColor: Colors.grey[500],
                   ),
                   child: Text('Cancel', style: GoogleFonts.poppins()),
                 ),
@@ -90,7 +89,9 @@ class MultiLineDialog extends StatelessWidget {
                   ),
                   child: Text(
                     'Save',
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.w600, color: Colors.white,
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
                     ),
                   ),
                 ),

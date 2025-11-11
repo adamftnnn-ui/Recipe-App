@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
-import '../controllers/search_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../components/search_bar.dart';
 import '../controllers/api_services.dart';
 import 'recipe_list_view.dart';
@@ -16,9 +16,8 @@ class SearchView extends StatefulWidget {
 class _SearchViewState extends State<SearchView> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  final SearchBarrController _controller = SearchBarrController();
   bool _isLoading = false;
-  List<dynamic> _history = [];
+  List<String> _history = [];
 
   @override
   void initState() {
@@ -27,14 +26,29 @@ class _SearchViewState extends State<SearchView> {
   }
 
   Future<void> _loadHistory() async {
-    final loadedHistory = _controller.getHistory();
+    final prefs = await SharedPreferences.getInstance();
+    final history = prefs.getStringList('search_history') ?? [];
     setState(() {
-      _history = loadedHistory;
+      _history = history;
     });
   }
 
-  void _handleClearHistory() {
-    _controller.clearHistory();
+  Future<void> _addToHistory(String keyword) async {
+    final prefs = await SharedPreferences.getInstance();
+    final history = prefs.getStringList('search_history') ?? [];
+    if (!history.contains(keyword)) {
+      history.insert(0, keyword);
+      if (history.length > 10) {
+        history.removeLast();
+      }
+      await prefs.setStringList('search_history', history);
+      _loadHistory();
+    }
+  }
+
+  Future<void> _clearHistory() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('search_history');
     _loadHistory();
   }
 
@@ -50,12 +64,11 @@ class _SearchViewState extends State<SearchView> {
           'recipes/complexSearch?query=${Uri.encodeComponent(keyword)}&number=10&addRecipeInformation=true&addRecipeInstructions=true';
       final response = await ApiService.getData(endpoint);
 
-      _controller.addHistory(keyword);
+      await _addToHistory(keyword);
 
       if (response != null && response['results'] != null) {
         final List<dynamic> recipes = response['results'] as List<dynamic>;
         if (mounted) {
-          _loadHistory();
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -74,7 +87,6 @@ class _SearchViewState extends State<SearchView> {
         }
       }
     } catch (e) {
-      print('Error fetching recipes: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Terjadi kesalahan saat mencari resep: $e')),
@@ -206,9 +218,8 @@ class _SearchViewState extends State<SearchView> {
                             ],
                           ),
                           const SizedBox(height: 12),
-                          ...history.map((item) {
-                            final isLast = item == history.last;
-                            final keyword = item.keyword;
+                          ...history.map((keyword) {
+                            final isLast = keyword == history.last;
                             return Column(
                               children: [
                                 InkWell(
@@ -257,7 +268,7 @@ class _SearchViewState extends State<SearchView> {
                           const SizedBox(height: 20),
                           Center(
                             child: GestureDetector(
-                              onTap: _handleClearHistory,
+                              onTap: _clearHistory,
                               child: Text(
                                 'Hapus Riwayat',
                                 style: GoogleFonts.poppins(

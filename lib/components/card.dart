@@ -15,6 +15,8 @@ class RecipeCard extends StatelessWidget {
   final double rating;
   final bool showDelete;
   final VoidCallback? onDelete;
+  final bool showEdit;
+  final VoidCallback? onEdit;
 
   const RecipeCard({
     super.key,
@@ -28,6 +30,8 @@ class RecipeCard extends StatelessWidget {
     required this.rating,
     this.showDelete = false,
     this.onDelete,
+    this.showEdit = false,
+    this.onEdit,
   });
 
   @override
@@ -54,7 +58,7 @@ class RecipeCard extends StatelessWidget {
             BoxShadow(
               color: Colors.black.withOpacity(0.04),
               blurRadius: 12,
-              offset: Offset(0, 4),
+              offset: const Offset(0, 4),
             ),
           ],
         ),
@@ -65,7 +69,7 @@ class RecipeCard extends StatelessWidget {
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(18),
                     topRight: Radius.circular(18),
                   ),
@@ -101,7 +105,7 @@ class RecipeCard extends StatelessWidget {
                 if (showDelete)
                   Positioned(
                     top: 8,
-                    right: 8,
+                    right: showEdit ? 32 : 8,
                     child: GestureDetector(
                       onTap: onDelete,
                       child: Container(
@@ -114,6 +118,27 @@ class RecipeCard extends StatelessWidget {
                         child: Icon(
                           HugeIcons.strokeRoundedDelete01,
                           color: Colors.red[600],
+                          size: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                if (showEdit)
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: GestureDetector(
+                      onTap: onEdit,
+                      child: Container(
+                        height: 24,
+                        width: 24,
+                        decoration: BoxDecoration(
+                          color: Colors.blue[100],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Icon(
+                          HugeIcons.strokeRoundedEdit01,
+                          color: Colors.blue[600],
                           size: 14,
                         ),
                       ),

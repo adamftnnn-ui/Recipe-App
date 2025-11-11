@@ -88,7 +88,9 @@ class NutritionDialog extends StatelessWidget {
                   ),
                   child: Text(
                     'Simpan',
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.w600, color: Colors.white,
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
                     ),
                   ),
                 ),

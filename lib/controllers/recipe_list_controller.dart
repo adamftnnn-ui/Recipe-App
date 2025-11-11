@@ -1,4 +1,3 @@
-// lib/controllers/recipe_list_controller.dart
 import 'package:flutter/foundation.dart';
 import 'dart:math';
 import '../controllers/api_services.dart';
@@ -16,12 +15,8 @@ class RecipeListController {
             .where((s) => s.isNotEmpty)
             .toList();
         suggestions.value = newSuggestions;
-      } else {
-        suggestions.value = ['Nasi Goreng', 'Sop Ayam', 'Ikan Bakar'];
       }
-    } catch (_) {
-      suggestions.value = ['Nasi Goreng', 'Sop Ayam', 'Ikan Bakar'];
-    }
+    } catch (_) {}
   }
 
   Future<void> fetchRecipesByFilter(String filter) async {
@@ -29,7 +24,7 @@ class RecipeListController {
     try {
       if (filter.isEmpty) return;
       final q = Uri.encodeQueryComponent(filter);
-final result = await ApiService.getData(
+      final result = await ApiService.getData(
         "recipes/complexSearch?query=$q&number=20&addRecipeInformation=true&includeNutrition=true",
       );
       if (result != null && result.containsKey('results')) {
@@ -54,8 +49,6 @@ final result = await ApiService.getData(
         }).toList();
         recipes.value = mapped;
       }
-    } catch (_) {
-      recipes.value = [];
-    }
+    } catch (_) {}
   }
 }

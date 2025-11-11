@@ -1,4 +1,3 @@
-// lib/views/components/nutrition_editable.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'nutrition_dialog.dart';

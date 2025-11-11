@@ -9,11 +9,15 @@ import '../components/header_editable.dart';
 class CreateRecipeView extends StatefulWidget {
   final CreateRecipeController controller;
   final ProfileController profileController;
+  final bool isEditMode;
+  final int? editIndex;
 
   const CreateRecipeView({
     super.key,
     required this.controller,
     required this.profileController,
+    this.isEditMode = false,
+    this.editIndex,
   });
 
   @override
@@ -33,6 +37,36 @@ class _CreateRecipeViewState extends State<CreateRecipeView> {
   final List<String> _steps = [];
   final List<Map<String, String>> _nutritions = [];
 
+  @override
+  void initState() {
+    super.initState();
+    if (widget.isEditMode && widget.editIndex != null) {
+      final recipe =
+          widget.profileController.userRecipes.value[widget.editIndex!];
+      widget.controller.setTitle(recipe['title'] ?? '');
+      widget.controller.setCountry(recipe['country'] ?? '');
+      widget.controller.setHalal(recipe['isHalal'] ?? false);
+      widget.controller.setTime(recipe['readyInMinutes'] ?? '');
+      widget.controller.setServing(recipe['servings'] ?? '');
+      widget.controller.setIngredients(
+        List<String>.from(recipe['ingredients'] ?? []),
+      );
+      widget.controller.setSteps(List<String>.from(recipe['steps'] ?? []));
+      widget.controller.setNutritions(
+        List<Map<String, String>>.from(recipe['nutritions'] ?? []),
+      );
+
+      _titleC.text = widget.controller.title;
+      _timeC.text = widget.controller.time;
+      _servingC.text = widget.controller.serving;
+      _selectedCountry = widget.controller.country;
+      _isHalal = widget.controller.isHalal;
+      _ingredients.addAll(widget.controller.ingredients);
+      _steps.addAll(widget.controller.steps);
+      _nutritions.addAll(widget.controller.nutritions);
+    }
+  }
+
   void _postRecipe() {
     final recipe = {
       'title': widget.controller.title,
@@ -46,11 +80,21 @@ class _CreateRecipeViewState extends State<CreateRecipeView> {
       'image': _selectedImage ?? '',
     };
 
-    widget.profileController.addRecipe(recipe);
+    if (widget.isEditMode && widget.editIndex != null) {
+      widget.profileController.updateRecipeAt(widget.editIndex!, recipe);
+    } else {
+      widget.profileController.addRecipe(recipe);
+    }
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Resep berhasil diposting!')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          widget.isEditMode
+              ? 'Resep berhasil diperbarui!'
+              : 'Resep berhasil diposting!',
+        ),
+      ),
+    );
 
     widget.controller.clearAll();
     setState(() {
@@ -79,7 +123,7 @@ class _CreateRecipeViewState extends State<CreateRecipeView> {
             children: [
               Center(
                 child: Text(
-                  'Buat Resep',
+                  widget.isEditMode ? 'Edit Resep' : 'Buat Resep',
                   style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -146,7 +190,9 @@ class _CreateRecipeViewState extends State<CreateRecipeView> {
               Center(
                 child: ElevatedButton(
                   onPressed: _postRecipe,
-                  child: const Text('Posting Resep'),
+                  child: Text(
+                    widget.isEditMode ? 'Perbarui Resep' : 'Posting Resep',
+                  ),
                 ),
               ),
             ],
