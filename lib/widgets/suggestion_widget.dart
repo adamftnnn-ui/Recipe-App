@@ -22,6 +22,13 @@ class SuggestionWidget extends StatelessWidget {
           itemCount: suggestions.length,
           itemBuilder: (context, index) {
             final label = suggestions[index];
+            // Ambil hanya 2 kata pertama
+            final shortLabel = label
+                .trim()
+                .split(RegExp(r'\s+'))
+                .take(2)
+                .join(' ');
+
             return InkWell(
               borderRadius: BorderRadius.circular(10),
               onTap: () {
@@ -40,7 +47,7 @@ class SuggestionWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  label,
+                  shortLabel,
                   style: GoogleFonts.poppins(
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
