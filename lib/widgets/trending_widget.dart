@@ -37,19 +37,19 @@ class TrendingWidget extends StatelessWidget {
                         initialKeyword: '',
                         title: 'Resep Trending',
                         recipes: recipes
-                            .map(
-                              (r) => {
-                                'image': r.image,
-                                'title': r.title,
-                                'isHalal': r.isHalal,
-                                'country': r.country,
-                                'readyInMinutes': r.readyInMinutes,
-                                'servings': r.servings,
-                                'rating': r.rating,
-                                'id': r.id,
-                              },
-                            )
-                            .toList(),
+                            // .map(
+                            //   (r) => {
+                            //     'image': r.image,
+                            //     'title': r.title,
+                            //     'isHalal': r.isHalal,
+                            //     'country': r.country,
+                            //     'readyInMinutes': r.readyInMinutes,
+                            //     'servings': r.servings,
+                            //     'rating': r.rating,
+                            //     'id': r.id,
+                            //   },
+                            // )
+                            // .toList(),
                       ),
                     ),
                   );

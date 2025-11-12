@@ -41,11 +41,9 @@ class RecipeCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) {
-              return DetailRecipeView(
-                controller: DetailRecipeController(recipeData: recipe),
-              );
-            },
+            builder: (_) => DetailRecipeView(
+              controller: DetailRecipeController(recipeData: recipe),
+            ),
           ),
         );
       },
