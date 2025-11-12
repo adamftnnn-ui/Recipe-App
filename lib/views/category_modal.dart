@@ -118,10 +118,7 @@ class CategoryModal extends StatelessWidget {
                   final item = items[index];
                   return InkWell(
                     borderRadius: BorderRadius.circular(10),
-                    onTap: () {
-                      Navigator.pop(context);
-                      onSelected(item);
-                    },
+                    onTap: () => onSelected(item),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 10,

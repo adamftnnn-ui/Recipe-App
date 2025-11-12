@@ -28,22 +28,22 @@ class SearchBarr extends StatefulWidget {
 }
 
 class _SearchBarrState extends State<SearchBarr> {
-  late TextEditingController searchController;
+  late TextEditingController SearchControllerr;
   final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    searchController =
+    SearchControllerr =
         widget.controller ??
         TextEditingController(text: widget.initialValue ?? "");
-    searchController.addListener(_onSearchTextChanged);
+    SearchControllerr.addListener(_onSearchTextChanged);
   }
 
   @override
   void dispose() {
-    searchController.removeListener(_onSearchTextChanged);
-    if (widget.controller == null) searchController.dispose();
+    SearchControllerr.removeListener(_onSearchTextChanged);
+    if (widget.controller == null) SearchControllerr.dispose();
     _focusNode.dispose();
     super.dispose();
   }
@@ -53,7 +53,7 @@ class _SearchBarrState extends State<SearchBarr> {
   }
 
   void _clearSearch() {
-    searchController.clear();
+    SearchControllerr.clear();
     widget.onClear?.call();
     setState(() {});
   }
@@ -109,7 +109,7 @@ class _SearchBarrState extends State<SearchBarr> {
                     child: TextField(
                       readOnly: widget.enableNavigation,
                       focusNode: _focusNode,
-                      controller: searchController,
+                      controller: SearchControllerr,
                       style: GoogleFonts.poppins(
                         fontSize: 13.5,
                         color: Colors.black87,
@@ -126,7 +126,7 @@ class _SearchBarrState extends State<SearchBarr> {
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 10,
                         ),
-                        suffixIcon: searchController.text.isEmpty
+                        suffixIcon: SearchControllerr.text.isEmpty
                             ? null
                             : IconButton(
                                 icon: Icon(

@@ -33,8 +33,6 @@ class ProfileView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-
-                  // PROFILE CARD
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
@@ -176,7 +174,6 @@ class ProfileView extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   const SizedBox(height: 20),
                   _buildSectionTitle('Personalisasi'),
                   const SizedBox(height: 8),
@@ -192,9 +189,8 @@ class ProfileView extends StatelessWidget {
                               initialKeyword: '',
                               title: 'Daftar Resepku',
                               recipes: controller.userRecipes.value,
-                              showDelete: true, // badge muncul
+                              showDelete: true,
                             ),
-
                           ),
                         );
                       },
@@ -205,7 +201,6 @@ class ProfileView extends StatelessWidget {
                     },
                     {'icon': HugeIcons.strokeRoundedStar, 'title': 'Penilaian'},
                   ]),
-
                   const SizedBox(height: 20),
                   _buildSectionTitle('Pengaturan'),
                   const SizedBox(height: 8),
@@ -221,7 +216,6 @@ class ProfileView extends StatelessWidget {
                       'title': 'Mode Gelap',
                     },
                   ]),
-
                   const SizedBox(height: 20),
                   _buildSectionTitle('Bantuan'),
                   const SizedBox(height: 8),
@@ -231,7 +225,6 @@ class ProfileView extends StatelessWidget {
                       'title': 'Pusat Bantuan',
                     },
                   ]),
-
                   const SizedBox(height: 20),
                   Center(
                     child: GestureDetector(

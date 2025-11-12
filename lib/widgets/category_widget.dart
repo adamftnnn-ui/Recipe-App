@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
-import '../../controllers/category_controller.dart';
+import '../controllers/category_controller.dart';
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({super.key});
@@ -38,9 +38,10 @@ class CategoryWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: categories.map((label) {
                 return GestureDetector(
-                  onTap: () {
-                    CategoryController.showCategoryModal(context, title: label);
-                  },
+                  onTap: () => CategoryController.showCategoryModal(
+                    context,
+                    title: label,
+                  ),
                   child: Column(
                     children: [
                       Container(

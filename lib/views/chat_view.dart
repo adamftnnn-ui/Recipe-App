@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../controllers/chat_controller.dart';
 import '../models/chat_model.dart';
-import '../components/chat_bubble.dart';
-import '../components/search_bar.dart';
+import '../widgets/chat_bubble.dart';
+import '../widgets/search_bar.dart';
 
 class ChatView extends StatefulWidget {
   const ChatView({super.key});
@@ -22,18 +22,15 @@ class _ChatViewState extends State<ChatView> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.addInitialGreeting(context);
-      setState(() {});
       _scrollToBottom();
     });
   }
 
   void _sendMessage(String text) async {
     if (text.trim().isEmpty) return;
-
     controller.addUserMessage(text, context);
     _inputController.clear();
     _scrollToBottom();
-
     await controller.getAssistantReply(text, context);
     _scrollToBottom();
     setState(() {});

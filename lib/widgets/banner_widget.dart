@@ -1,4 +1,3 @@
-// lib/views/components/banner.dart
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -47,6 +46,9 @@ class _BannerWidgetState extends State<BannerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.banners.isEmpty) {
+      return const SizedBox(height: 180);
+    }
     return SizedBox(
       height: 180,
       child: Stack(
@@ -69,6 +71,13 @@ class _BannerWidgetState extends State<BannerWidget> {
                     child: Image.asset(
                       widget.banners[index],
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: Colors.grey[200],
+                          alignment: Alignment.center,
+                          child: const Text('Banner tidak tersedia'),
+                        );
+                      },
                     ),
                   ),
                 );

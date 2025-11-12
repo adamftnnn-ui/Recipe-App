@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import '../models/chat_model.dart';
-import '../controllers/api_services.dart';
+import '../repositories/chat_repository.dart';
 
 class ChatController {
+  final ChatRepository repository = ChatRepository();
   final ValueNotifier<List<ChatMessage>> chatsNotifier = ValueNotifier([]);
 
   final String userAvatar = 'assets/images/avatar.jpg';
   final String assistantAvatar = 'assets/images/avatar_ai.jpg';
   final String userName = 'Adam';
   final String assistantName = 'Kama';
+
+  String _contextId = '342938'; // Context ID default dari Spoonacular
 
   void addInitialGreeting(BuildContext context) {
     chatsNotifier.value = [
@@ -28,7 +31,6 @@ class ChatController {
     final message = ChatMessage(
       avatarUrl: userAvatar,
       name: userName,
-      role: null,
       message: text,
       time: TimeOfDay.now().format(context),
       isAssistant: false,
@@ -48,15 +50,12 @@ class ChatController {
     chatsNotifier.value = [...chatsNotifier.value, message];
   }
 
-  // Fungsi utama: pilih API mana yang digunakan
   Future<void> getAssistantReply(
     String userMessage,
     BuildContext context,
   ) async {
     try {
       final keyword = userMessage.toLowerCase();
-
-      // Jika ada kata 'resep', 'burger', 'ayam', 'nasi', gunakan Spoonacular
       final recipeKeywords = [
         'resep',
         'burger',
@@ -72,22 +71,16 @@ class ChatController {
       if (isRecipeQuery) {
         await _fetchRecipe(userMessage, context);
       } else {
-        await _fetchGeminiReply(userMessage, context);
+        await _fetchConverseReply(userMessage, context);
       }
     } catch (e) {
       addAssistantMessage('Maaf, terjadi kesalahan.', context);
-      print("Error getAssistantReply: $e");
     }
   }
 
-  // Panggil Spoonacular
   Future<void> _fetchRecipe(String userMessage, BuildContext context) async {
     try {
-      final query = Uri.encodeQueryComponent(userMessage);
-      final result = await ApiService.getData(
-        "recipes/complexSearch?query=$query&number=1&addRecipeInformation=true",
-      );
-
+      final result = await repository.getRecipe(userMessage);
       if (result != null &&
           result.containsKey('results') &&
           (result['results'] as List).isNotEmpty) {
@@ -100,14 +93,11 @@ class ChatController {
             .where((s) => s.isNotEmpty)
             .toList();
 
-        String reply = '**$title**\n';
-        reply += 'Porsi: $servings\n';
-        reply += 'Waktu masak: $ready menit\n';
-        reply += 'Bahan:\n';
+        String reply =
+            '**$title**\nPorsi: $servings\nWaktu masak: $ready menit\nBahan:\n';
         for (var ing in ingredients) {
           reply += '- $ing\n';
         }
-
         addAssistantMessage(reply.trim(), context);
       } else {
         addAssistantMessage(
@@ -120,22 +110,23 @@ class ChatController {
         'Maaf, terjadi kesalahan saat mengambil resep.',
         context,
       );
-      print("Error fetching recipe: $e");
     }
   }
 
-  // Panggil Gemini API
-  Future<void> _fetchGeminiReply(
+  Future<void> _fetchConverseReply(
     String userMessage,
     BuildContext context,
   ) async {
     try {
-      final response = await ApiService.sendGeminiMessage(userMessage);
-      final replyText = response['reply'] ?? 'Maaf, AI tidak merespon.';
+      final replyText = await repository.getConverseReply(
+        userMessage,
+        _contextId,
+      );
       addAssistantMessage(replyText, context);
+      // Update contextId jika API mengembalikan yang baru (opsional)
+      // _contextId = response?['contextId'] ?? _contextId;
     } catch (e) {
       addAssistantMessage('Maaf, terjadi kesalahan pada AI.', context);
-      print("Error fetching Gemini reply: $e");
     }
   }
 }

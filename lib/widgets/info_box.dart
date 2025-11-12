@@ -144,6 +144,7 @@ class InfoBox extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     DropdownButtonFormField<String>(
+                      isExpanded: true,
                       decoration: _inputDecoration('Negara').copyWith(
                         prefixIcon: Icon(
                           HugeIcons.strokeRoundedEarth,

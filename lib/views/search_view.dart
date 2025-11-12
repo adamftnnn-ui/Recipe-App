@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../components/search_bar.dart';
-import '../controllers/api_services.dart';
+import '../controllers/search_controller.dart';
+import '../widgets/search_bar.dart';
 import 'recipe_list_view.dart';
 
 class SearchView extends StatefulWidget {
@@ -14,8 +14,9 @@ class SearchView extends StatefulWidget {
 }
 
 class _SearchViewState extends State<SearchView> {
-  final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _SearchControllerr = TextEditingController();
   final FocusNode _focusNode = FocusNode();
+  final SearchControllerr _SearchControllerrLogic = SearchControllerr();
   bool _isLoading = false;
   List<String> _history = [];
 
@@ -28,9 +29,7 @@ class _SearchViewState extends State<SearchView> {
   Future<void> _loadHistory() async {
     final prefs = await SharedPreferences.getInstance();
     final history = prefs.getStringList('search_history') ?? [];
-    setState(() {
-      _history = history;
-    });
+    setState(() => _history = history);
   }
 
   Future<void> _addToHistory(String keyword) async {
@@ -38,9 +37,7 @@ class _SearchViewState extends State<SearchView> {
     final history = prefs.getStringList('search_history') ?? [];
     if (!history.contains(keyword)) {
       history.insert(0, keyword);
-      if (history.length > 10) {
-        history.removeLast();
-      }
+      if (history.length > 10) history.removeLast();
       await prefs.setStringList('search_history', history);
       _loadHistory();
     }
@@ -60,23 +57,17 @@ class _SearchViewState extends State<SearchView> {
     setState(() => _isLoading = true);
 
     try {
-      final endpoint =
-          'recipes/complexSearch?query=${Uri.encodeComponent(keyword)}&number=10&addRecipeInformation=true&addRecipeInstructions=true';
-      final response = await ApiService.getData(endpoint);
-
+      final recipes = await _SearchControllerrLogic.searchRecipes(keyword);
       await _addToHistory(keyword);
 
-      if (response != null && response['results'] != null) {
-        final List<dynamic> recipes = response['results'] as List<dynamic>;
-        if (mounted) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  RecipeListView(initialKeyword: keyword, recipes: recipes),
-            ),
-          );
-        }
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                RecipeListView(initialKeyword: keyword, recipes: recipes),
+          ),
+        );
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -99,15 +90,13 @@ class _SearchViewState extends State<SearchView> {
 
   @override
   void dispose() {
-    _searchController.dispose();
+    _SearchControllerr.dispose();
     _focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final history = _history;
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -160,7 +149,7 @@ class _SearchViewState extends State<SearchView> {
               ),
             ),
             SearchBarr(
-              controller: _searchController,
+              controller: _SearchControllerr,
               enableNavigation: false,
               onSubmitted: _handleSearch,
               padding: const EdgeInsets.fromLTRB(20, 6, 20, 8),
@@ -177,7 +166,7 @@ class _SearchViewState extends State<SearchView> {
                 ),
               ),
             Expanded(
-              child: history.isEmpty
+              child: _history.isEmpty
                   ? Center(
                       child: Text(
                         'Tidak ada riwayat pencarian.',
@@ -218,13 +207,13 @@ class _SearchViewState extends State<SearchView> {
                             ],
                           ),
                           const SizedBox(height: 12),
-                          ...history.map((keyword) {
-                            final isLast = keyword == history.last;
+                          ..._history.map((keyword) {
+                            final isLast = keyword == _history.last;
                             return Column(
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    _searchController.text = keyword;
+                                    _SearchControllerr.text = keyword;
                                     _handleSearch(keyword);
                                   },
                                   borderRadius: BorderRadius.circular(10),

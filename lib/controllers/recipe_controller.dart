@@ -1,13 +1,9 @@
+import '../repositories/recipe_repository.dart';
+
 class RecipeController {
-  final List<dynamic> _allRecipes = [
-  ];
+  final RecipeRepository repository = RecipeRepository();
 
-  List<dynamic> searchRecipes(String keyword) {
-    final lower = keyword.toLowerCase();
-    return _allRecipes
-        .where((r) => r.title.toLowerCase().contains(lower))
-        .toList();
+  Future<List<dynamic>> searchRecipes(String keyword) async {
+    return await repository.fetchRecipesByFilter(keyword);
   }
-
-  List<dynamic> get allRecipes => _allRecipes;
 }

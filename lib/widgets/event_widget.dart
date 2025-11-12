@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
-import '../../models/event_model.dart';
+import '../models/event_model.dart';
 
-class Event extends StatelessWidget {
+class EventWidget extends StatelessWidget {
   final List<EventModel> events;
 
-  const Event({super.key, required this.events});
+  const EventWidget({super.key, required this.events});
 
   @override
   Widget build(BuildContext context) {

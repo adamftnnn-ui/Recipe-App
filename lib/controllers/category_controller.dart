@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../views/category_modal.dart';
 import '../views/recipe_list_view.dart';
-import '../controllers/recipe_list_controller.dart';
 
 class CategoryController {
   static void showCategoryModal(
@@ -19,9 +18,8 @@ class CategoryController {
         title: title,
         items: _getCategoryItems(title),
         onSelected: (value) async {
-          Navigator.pop(context); // tutup modal
+          Navigator.pop(context);
           if (title == 'Halal') {
-            // tetap tampilkan pilihan Halal/Non-Halal
             final query = value.toLowerCase() == 'halal' ? 'halal' : '';
             Navigator.push(
               context,
@@ -29,16 +27,7 @@ class CategoryController {
                 builder: (_) => RecipeListView(initialKeyword: query),
               ),
             );
-          } else if (title == 'Acara') {
-            // Acara manual
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => RecipeListView(initialKeyword: value),
-              ),
-            );
           } else {
-            // Diet, Negara, Hidangan -> panggil API Spoonacular
             Navigator.push(
               context,
               MaterialPageRoute(

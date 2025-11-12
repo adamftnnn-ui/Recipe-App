@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../models/recipe_model.dart';
-import '../components/card.dart';
-import '../../views/recipe_list_view.dart';
+import '../models/recipe_model.dart';
+import '../widgets/recipe_card.dart';
+import '../views/recipe_list_view.dart';
 
-class Trending extends StatelessWidget {
+class TrendingWidget extends StatelessWidget {
   final List<RecipeModel> recipes;
 
-  const Trending({super.key, required this.recipes});
+  const TrendingWidget({super.key, required this.recipes});
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +34,7 @@ class Trending extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (_) => RecipeListView(
-                        initialKeyword:
-                            '',
+                        initialKeyword: '',
                         title: 'Resep Trending',
                         recipes: recipes
                             .map(
@@ -77,7 +76,6 @@ class Trending extends StatelessWidget {
               separatorBuilder: (_, __) => const SizedBox(width: 16),
               itemBuilder: (context, index) {
                 final item = recipes[index];
-
                 return RecipeCard(
                   recipe: item,
                   image: item.image,

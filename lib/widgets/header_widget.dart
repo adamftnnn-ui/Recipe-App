@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../models/user_model.dart';
+import '../models/user_model.dart';
 
 class HeaderWidget extends StatelessWidget {
   final UserModel user;

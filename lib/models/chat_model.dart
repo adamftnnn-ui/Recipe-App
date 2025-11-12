@@ -14,4 +14,26 @@ class ChatMessage {
     required this.time,
     required this.isAssistant,
   });
+
+  factory ChatMessage.fromJson(Map<String, dynamic> json) {
+    return ChatMessage(
+      avatarUrl: json['avatarUrl'] ?? '',
+      name: json['name'] ?? '',
+      role: json['role'],
+      message: json['message'] ?? '',
+      time: json['time'] ?? '',
+      isAssistant: json['isAssistant'] ?? false,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'avatarUrl': avatarUrl,
+      'name': name,
+      'role': role,
+      'message': message,
+      'time': time,
+      'isAssistant': isAssistant,
+    };
+  }
 }

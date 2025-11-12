@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
-import '../components/card.dart';
-import '../components/search_bar.dart';
+import '../controllers/create_recipe_controller.dart';
 import '../controllers/recipe_list_controller.dart';
 import '../controllers/profile_controller.dart';
+import '../widgets/recipe_card.dart';
+import '../widgets/search_bar.dart';
 import 'create_recipe_view.dart';
-import '../controllers/create_recipe_controller.dart';
 
 class RecipeListView extends StatefulWidget {
   final String initialKeyword;
@@ -50,13 +50,12 @@ class _RecipeListViewState extends State<RecipeListView>
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (widget.recipes != null && widget.recipes!.isNotEmpty) {
-        controller.recipes.value = widget.recipes!;
-        _animationController.forward();
         setState(() => isLoading = false);
+        _animationController.forward();
       } else {
         await controller.fetchRecipesByFilter(widget.initialKeyword);
-        _animationController.forward();
         setState(() => isLoading = false);
+        _animationController.forward();
       }
     });
   }
@@ -70,7 +69,7 @@ class _RecipeListViewState extends State<RecipeListView>
 
   void _editRecipe(int index) {
     if (widget.profileController == null) return;
-    final recipe = controller.recipes.value[index];
+    final recipe = widget.recipes?[index] ?? {};
     final createController = CreateRecipeController();
 
     createController.setTitle(recipe['title'] ?? '');
@@ -171,12 +170,18 @@ class _RecipeListViewState extends State<RecipeListView>
             Expanded(
               child: FadeTransition(
                 opacity: _fadeIn,
-                child: ValueListenableBuilder<List<dynamic>>(
-                  valueListenable: controller.recipes,
-                  builder: (context, recipes, _) {
-                    if (isLoading)
+                child: FutureBuilder<List<dynamic>>(
+                  future: widget.recipes != null
+                      ? Future.value(widget.recipes)
+                      : controller.fetchRecipesByFilter(widget.initialKeyword),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
-
+                    }
+                    if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    }
+                    final recipes = snapshot.data ?? [];
                     if (recipes.isEmpty) {
                       return Center(
                         child: Padding(
@@ -204,7 +209,6 @@ class _RecipeListViewState extends State<RecipeListView>
                         ),
                       );
                     }
-
                     return SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),

@@ -27,6 +27,40 @@ class RecipeModel {
     this.original,
   });
 
+  factory RecipeModel.fromJson(Map<String, dynamic> json) {
+    return RecipeModel(
+      id: json['id'] ?? 0,
+      image: json['image'] ?? '',
+      title: json['title'] ?? 'Tanpa Judul',
+      country: json['country'] ?? 'Global',
+      isHalal: json['isHalal'] ?? true,
+      readyInMinutes: json['readyInMinutes'] ?? '-',
+      servings: json['servings'] ?? '-',
+      rating: (json['rating'] ?? 4.5).toDouble(),
+      ingredients: List<String>.from(json['ingredients'] ?? []),
+      instructions: List<String>.from(json['instructions'] ?? []),
+      nutrition: Map<String, String>.from(json['nutrition'] ?? {}),
+      original: json['original'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'image': image,
+      'title': title,
+      'country': country,
+      'isHalal': isHalal,
+      'readyInMinutes': readyInMinutes,
+      'servings': servings,
+      'rating': rating,
+      'ingredients': ingredients,
+      'instructions': instructions,
+      'nutrition': nutrition,
+      'original': original,
+    };
+  }
+
   factory RecipeModel.fromMap(dynamic m) {
     if (m == null) {
       return RecipeModel(

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../controllers/create_recipe_controller.dart';
 import '../controllers/profile_controller.dart';
-import '../components/multi_line_editable.dart';
-import '../components/nutrition_editable.dart';
-import '../components/header_editable.dart';
+import '../widgets/multi_line_section.dart';
+import '../widgets/nutrition_editable.dart';
+import '../widgets/info_box.dart';
 
 class CreateRecipeView extends StatefulWidget {
   final CreateRecipeController controller;

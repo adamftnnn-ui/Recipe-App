@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../controllers/main_controller.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'home_view.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -55,9 +56,9 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const MainController()),
-        );
+        Navigator.of(
+          context,
+        ).pushReplacement(MaterialPageRoute(builder: (_) => const HomeView()));
       }
     });
   }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
 import '../controllers/detail_recipe_controller.dart';
-import '../components/header_section.dart';
-import '../components/ingredients_section.dart';
-import '../components/instruction_section.dart';
-import '../components/nutrition_section.dart';
+import '../widgets/header_section.dart';
+import '../widgets/ingredients_section.dart';
+import '../widgets/instruction_section.dart';
+import '../widgets/nutrition_section.dart';
 
 class DetailRecipeView extends StatelessWidget {
   final DetailRecipeController controller;

@@ -1,89 +1,29 @@
-// lib/controllers/home_controller.dart
+import 'package:flutter/material.dart';
 import '../models/user_model.dart';
 import '../models/recipe_model.dart';
+import '../models/event_model.dart';
+import '../repositories/user_repository.dart';
+import '../repositories/recipe_repository.dart';
+import '../repositories/event_repository.dart';
 
 class HomeController {
-  final UserModel user = UserModel(
-    name: 'Adam',
-    avatarUrl: 'assets/images/avatar.jpg',
-  );
+  final UserRepository userRepository = UserRepository();
+  final RecipeRepository recipeRepository = RecipeRepository();
+  final EventRepository eventRepository = EventRepository();
 
-  final List<String> banners = [
-    'assets/images/banner1.png',
-    'assets/images/banner2.png',
-    'assets/images/banner3.png',
-  ];
+  Future<UserModel> fetchUser() async {
+    return await userRepository.fetchUser();
+  }
 
-  final Map<String, List<String>> categoryData = {
-    'Halal': ['Halal', 'Non-Halal'],
-    'Diet': ['Vegetarian', 'Vegan', 'Keto'],
-    'Hidangan': ['Utama', 'Pembuka', 'Penutup'],
-    'Acara': ['Ulang Tahun', 'Ramadhan', 'Natal'],
-    'Negara': ['Indonesia', 'Malaysia', 'Thailand', 'Vietnam', 'Jepang'],
-  };
+  Future<List<String>> fetchSuggestions() async {
+    return await recipeRepository.fetchSuggestions();
+  }
 
-  final List<String> suggestions = [
-    'Mangut Lele',
-    'Sop Ayam',
-    'Nasi Goreng',
-    'Ikan Bakar',
-    'Tumis Kangkung',
-    'Rawon Daging',
-  ];
+  Future<List<RecipeModel>> fetchTrendingRecipes() async {
+    return await recipeRepository.fetchTrendingRecipes();
+  }
 
-  final List<dynamic> trendingRecipes = [
-    // RecipeModel(
-    //   image: 'assets/images/banner2.png',
-    //   title: 'Nasi Goreng Spesial',
-    //   country: 'Indonesia',
-    //   isHalal: true,
-    //   readyInMinutes: '15′',
-    //   servings: '2',
-    //   rating: 4.8,
-    //   ingredients: [
-    //     'Nasi putih 2 piring',
-    //     'Telur 2 butir',
-    //     'Kecap manis 2 sdm',
-    //     'Bawang merah 3 siung',
-    //   ],
-    //   instructions: [
-    //     'Panaskan minyak di wajan.',
-    //     'Tumis bawang hingga harum.',
-    //     'Masukkan telur, orak-arik hingga matang.',
-    //     'Tambahkan nasi dan kecap, aduk rata.',
-    //   ],
-    //   nutrition: {
-    //     'Kalori': '350 kkal',
-    //     'Protein': '12 g',
-    //     'Lemak': '10 g',
-    //     'Karbohidrat': '50 g',
-    //   },
-    // ),
-    // RecipeModel(
-    //   image: 'assets/images/banner2.png',
-    //   title: 'Ayam Bakar Madu',
-    //   country: 'Indonesia',
-    //   isHalal: true,
-    //   readyInMinutes: '25′',
-    //   servings: '3',
-    //   rating: 4.9,
-    //   ingredients: [
-    //     'Ayam 500 gr',
-    //     'Madu 3 sdm',
-    //     'Bawang putih 2 siung',
-    //     'Garam dan merica secukupnya',
-    //   ],
-    //   instructions: [
-    //     'Marinasi ayam dengan madu dan bumbu.',
-    //     'Diamkan 30 menit.',
-    //     'Bakar ayam hingga matang dan harum.',
-    //   ],
-    //   nutrition: {
-    //     'Kalori': '420 kkal',
-    //     'Protein': '35 g',
-    //     'Lemak': '20 g',
-    //     'Karbohidrat': '15 g',
-    //   },
-    // ),
-  ];
+  Future<List<EventModel>> fetchEvents() async {
+    return await eventRepository.fetchEvents();
+  }
 }
