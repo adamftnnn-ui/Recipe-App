@@ -7,13 +7,46 @@ import '../widgets/ingredients_section.dart';
 import '../widgets/instruction_section.dart';
 import '../widgets/nutrition_section.dart';
 
-class DetailRecipeView extends StatelessWidget {
+class DetailRecipeView extends StatefulWidget {
   final DetailRecipeController controller;
 
   const DetailRecipeView({super.key, required this.controller});
 
   @override
+  State<DetailRecipeView> createState() => _DetailRecipeViewState();
+}
+
+class _DetailRecipeViewState extends State<DetailRecipeView> {
+  bool isLoading = true;
+  String? error;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDetailData();
+  }
+
+  Future<void> _loadDetailData() async {
+    try {
+      await widget.controller.fetchRecipeFromApi(widget.controller.recipe.id);
+    } catch (e) {
+      error = e.toString();
+    }
+    setState(() => isLoading = false);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final controller = widget.controller;
+
+    if (isLoading) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    if (error != null) {
+      return Scaffold(body: Center(child: Text("Gagal memuat: $error")));
+    }
+
     final recipe = controller.recipe;
 
     return Scaffold(
@@ -21,6 +54,7 @@ class DetailRecipeView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
+
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 14, 20, 8),
               child: Row(
@@ -37,7 +71,7 @@ class DetailRecipeView extends StatelessWidget {
                           BoxShadow(
                             color: Colors.black.withOpacity(0.04),
                             blurRadius: 6,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -66,6 +100,7 @@ class DetailRecipeView extends StatelessWidget {
                 ],
               ),
             ),
+
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
